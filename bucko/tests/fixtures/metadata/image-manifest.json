@@ -1,0 +1,141 @@
+{
+    "header": {
+        "version": "0.3"
+    }, 
+    "payload": {
+        "compose": {
+            "date": "20161208", 
+            "id": "RHCEPH-2.1-RHEL-7-20161208.t.1", 
+            "respin": 1, 
+            "type": "test"
+        }, 
+        "images": {
+            "MON": {
+                "x86_64": [
+                    {
+                        "arch": "x86_64", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "2edab95df60c0bd61a4feb813b8bc79b", 
+                            "sha1": "af3afa56aeae499531b142da57df3f166530c3b5", 
+                            "sha256": "1a9c850da24641bf80e878685195c1c934f9ed64c91ee50a03bf109b338c53b7"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "22e60dfcb6c55bd47b51ebf05f720766", 
+                        "mtime": 1481244348, 
+                        "path": "MON/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-x86_64-dvd.iso", 
+                        "size": 297537536, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 x86_64"
+                    }, 
+                    {
+                        "arch": "src", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "4ebbae201971e32d05412f1cf3c2cac1", 
+                            "sha1": "2e0ce7a0b16fbcb322ec3d17a84379cc1a9eafe0", 
+                            "sha256": "f6993629441d91677b993ca0f4c6b0208c079a595232146fb35da4e7d10e7892"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "7d6eb36ab3eb7b27c3498bb3665650c4", 
+                        "mtime": 1481244352, 
+                        "path": "MON/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-source-dvd.iso", 
+                        "size": 96688128, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 src"
+                    }
+                ]
+            }, 
+            "OSD": {
+                "x86_64": [
+                    {
+                        "arch": "x86_64", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "2edab95df60c0bd61a4feb813b8bc79b", 
+                            "sha1": "af3afa56aeae499531b142da57df3f166530c3b5", 
+                            "sha256": "1a9c850da24641bf80e878685195c1c934f9ed64c91ee50a03bf109b338c53b7"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "22e60dfcb6c55bd47b51ebf05f720766", 
+                        "mtime": 1481244348, 
+                        "path": "OSD/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-x86_64-dvd.iso", 
+                        "size": 297537536, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 x86_64"
+                    }, 
+                    {
+                        "arch": "src", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "4ebbae201971e32d05412f1cf3c2cac1", 
+                            "sha1": "2e0ce7a0b16fbcb322ec3d17a84379cc1a9eafe0", 
+                            "sha256": "f6993629441d91677b993ca0f4c6b0208c079a595232146fb35da4e7d10e7892"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "7d6eb36ab3eb7b27c3498bb3665650c4", 
+                        "mtime": 1481244352, 
+                        "path": "OSD/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-source-dvd.iso", 
+                        "size": 96688128, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 src"
+                    }
+                ]
+            }, 
+            "Tools": {
+                "x86_64": [
+                    {
+                        "arch": "x86_64", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "2edab95df60c0bd61a4feb813b8bc79b", 
+                            "sha1": "af3afa56aeae499531b142da57df3f166530c3b5", 
+                            "sha256": "1a9c850da24641bf80e878685195c1c934f9ed64c91ee50a03bf109b338c53b7"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "22e60dfcb6c55bd47b51ebf05f720766", 
+                        "mtime": 1481244348, 
+                        "path": "Tools/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-x86_64-dvd.iso", 
+                        "size": 297537536, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 x86_64"
+                    }, 
+                    {
+                        "arch": "src", 
+                        "bootable": false, 
+                        "checksums": {
+                            "md5": "4ebbae201971e32d05412f1cf3c2cac1", 
+                            "sha1": "2e0ce7a0b16fbcb322ec3d17a84379cc1a9eafe0", 
+                            "sha256": "f6993629441d91677b993ca0f4c6b0208c079a595232146fb35da4e7d10e7892"
+                        }, 
+                        "disc_count": 1, 
+                        "disc_number": 1, 
+                        "format": "iso", 
+                        "implant_md5": "7d6eb36ab3eb7b27c3498bb3665650c4", 
+                        "mtime": 1481244352, 
+                        "path": "Tools/x86_64/iso/RHCEPH-2.1-RHEL-7-20161208.t.1-source-dvd.iso", 
+                        "size": 96688128, 
+                        "type": "dvd", 
+                        "unified": true, 
+                        "volume_id": "RHCEPH 2.1 src"
+                    }
+                ]
+            }
+        }
+    }
+}

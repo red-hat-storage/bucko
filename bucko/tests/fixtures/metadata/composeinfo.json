@@ -1,0 +1,141 @@
+{
+  "header": {
+    "version": "0.3"
+  },
+  "payload": {
+    "base_product": {
+      "name": "Red Hat Enterprise Linux",
+      "short": "RHEL",
+      "version": "7"
+    },
+    "compose": {
+      "date": "20161110",
+      "id": "MYPRODUCT-2.1-RHEL-7-20161110.t.0",
+      "respin": 0,
+      "type": "test"
+    },
+    "product": {
+      "is_layered": true,
+      "name": "Really Cool Product",
+      "short": "MYPRODUCT",
+      "type": "ga",
+      "version": "2.1"
+    },
+    "variants": {
+      "MON": {
+        "arches": [
+          "x86_64"
+        ],
+        "id": "MON",
+        "name": "Ceph Monitor",
+        "paths": {
+          "debug_packages": {
+            "x86_64": "MON/x86_64/debug/tree/Packages"
+          },
+          "debug_repository": {
+            "x86_64": "MON/x86_64/debug/tree"
+          },
+          "debug_tree": {
+            "x86_64": "MON/x86_64/debug/tree"
+          },
+          "os_tree": {
+            "x86_64": "MON/x86_64/os"
+          },
+          "packages": {
+            "x86_64": "MON/x86_64/os/Packages"
+          },
+          "repository": {
+            "x86_64": "MON/x86_64/os"
+          },
+          "source_packages": {
+            "x86_64": "MON/source/tree/Packages"
+          },
+          "source_repository": {
+            "x86_64": "MON/source/tree"
+          },
+          "source_tree": {
+            "x86_64": "MON/source/tree"
+          }
+        },
+        "type": "variant",
+        "uid": "MON"
+      },
+      "OSD": {
+        "arches": [
+          "x86_64"
+        ],
+        "id": "OSD",
+        "name": "Ceph Object Storage Daemon",
+        "paths": {
+          "debug_packages": {
+            "x86_64": "OSD/x86_64/debug/tree/Packages"
+          },
+          "debug_repository": {
+            "x86_64": "OSD/x86_64/debug/tree"
+          },
+          "debug_tree": {
+            "x86_64": "OSD/x86_64/debug/tree"
+          },
+          "os_tree": {
+            "x86_64": "OSD/x86_64/os"
+          },
+          "packages": {
+            "x86_64": "OSD/x86_64/os/Packages"
+          },
+          "repository": {
+            "x86_64": "OSD/x86_64/os"
+          },
+          "source_packages": {
+            "x86_64": "OSD/source/tree/Packages"
+          },
+          "source_repository": {
+            "x86_64": "OSD/source/tree"
+          },
+          "source_tree": {
+            "x86_64": "OSD/source/tree"
+          }
+        },
+        "type": "variant",
+        "uid": "OSD"
+      },
+      "Tools": {
+        "arches": [
+          "x86_64"
+        ],
+        "id": "Tools",
+        "name": "Ceph Tools",
+        "paths": {
+          "debug_packages": {
+            "x86_64": "Tools/x86_64/debug/tree/Packages"
+          },
+          "debug_repository": {
+            "x86_64": "Tools/x86_64/debug/tree"
+          },
+          "debug_tree": {
+            "x86_64": "Tools/x86_64/debug/tree"
+          },
+          "os_tree": {
+            "x86_64": "Tools/x86_64/os"
+          },
+          "packages": {
+            "x86_64": "Tools/x86_64/os/Packages"
+          },
+          "repository": {
+            "x86_64": "Tools/x86_64/os"
+          },
+          "source_packages": {
+            "x86_64": "Tools/source/tree/Packages"
+          },
+          "source_repository": {
+            "x86_64": "Tools/source/tree"
+          },
+          "source_tree": {
+            "x86_64": "Tools/source/tree"
+          }
+        },
+        "type": "variant",
+        "uid": "Tools"
+      }
+    }
+  }
+}

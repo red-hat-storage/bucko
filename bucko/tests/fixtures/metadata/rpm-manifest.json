@@ -1,0 +1,961 @@
+{
+    "header": {
+        "version": "0.3"
+    }, 
+    "payload": {
+        "compose": {
+            "date": "20161208", 
+            "id": "RHCEPH-2.1-RHEL-7-20161208.t.1", 
+            "respin": 1, 
+            "type": "test"
+        }, 
+        "manifest": {
+            "MON": {
+                "src": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "path": "MON/source/tree/Packages/babeltrace-1.2.4-3.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "calamari-server-0:1.4.9-1.el7cp.src": {
+                        "path": "MON/source/tree/Packages/calamari-server-1.4.9-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "path": "MON/source/tree/Packages/ceph-10.2.3-17.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "path": "MON/source/tree/Packages/fcgi-2.4.0-25.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "leveldb-0:1.12.0-5.el7cp.src": {
+                        "path": "MON/source/tree/Packages/leveldb-1.12.0-5.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "path": "MON/source/tree/Packages/lttng-tools-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "path": "MON/source/tree/Packages/lttng-ust-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "openpgm-0:5.2.122-3.1.el7.src": {
+                        "path": "MON/source/tree/Packages/openpgm-5.2.122-3.1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-crypto-0:2.6.1-1.1.el7.src": {
+                        "path": "MON/source/tree/Packages/python-crypto-2.6.1-1.1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-flask-1:0.10.1-5.el7.src": {
+                        "path": "MON/source/tree/Packages/python-flask-0.10.1-5.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-itsdangerous-0:0.23-1.el7.src": {
+                        "path": "MON/source/tree/Packages/python-itsdangerous-0.23-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-jinja2-0:2.7.2-2.el7cp.src": {
+                        "path": "MON/source/tree/Packages/python-jinja2-2.7.2-2.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-meld3-0:0.6.10-1.el7cp.src": {
+                        "path": "MON/source/tree/Packages/python-meld3-0.6.10-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-msgpack-0:0.4.5-1.1.el7.src": {
+                        "path": "MON/source/tree/Packages/python-msgpack-0.4.5-1.1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-werkzeug-0:0.9.1-1.el7.src": {
+                        "path": "MON/source/tree/Packages/python-werkzeug-0.9.1-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-zmq-0:14.3.1-1.1.el7.src": {
+                        "path": "MON/source/tree/Packages/python-zmq-14.3.1-1.1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "salt-0:2015.5.5-1.el7.src": {
+                        "path": "MON/source/tree/Packages/salt-2015.5.5-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "supervisor-0:3.0-2.el7cp.src": {
+                        "path": "MON/source/tree/Packages/supervisor-3.0-2.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "path": "MON/source/tree/Packages/userspace-rcu-0.7.9-2.el7rhgs.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "xmlstarlet-0:1.6.1-1.el7.src": {
+                        "path": "MON/source/tree/Packages/xmlstarlet-1.6.1-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "zeromq3-1:3.2.5-1.1.el7.src": {
+                        "path": "MON/source/tree/Packages/zeromq3-3.2.5-1.1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }
+                }, 
+                "x86_64": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "babeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/babeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "babeltrace-debuginfo-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/babeltrace-debuginfo-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "libbabeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/libbabeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "calamari-server-0:1.4.9-1.el7cp.src": {
+                        "calamari-server-0:1.4.9-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/calamari-server-1.4.9-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "ceph-base-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/ceph-base-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-common-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/ceph-common-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-debuginfo-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/ceph-debuginfo-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "ceph-mon-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/ceph-mon-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-selinux-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/ceph-selinux-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-test-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/ceph-test-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/libcephfs1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/libcephfs1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librados2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librados2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librbd1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librbd1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librgw2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/librgw2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-cephfs-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-cephfs-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rados-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-rados-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rbd-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-rbd-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "fcgi-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/fcgi-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "fcgi-debuginfo-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/fcgi-debuginfo-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "gperftools-0:2.4-8.el7.src": {
+                        "gperftools-debuginfo-0:2.4-8.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/gperftools-debuginfo-2.4-8.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "leveldb-0:1.12.0-5.el7cp.src": {
+                        "leveldb-0:1.12.0-5.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/leveldb-1.12.0-5.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "leveldb-debuginfo-0:1.12.0-5.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/leveldb-debuginfo-1.12.0-5.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "lttng-tools-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/lttng-tools-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-tools-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/lttng-tools-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "lttng-ust-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/lttng-ust-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-ust-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/lttng-ust-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "openpgm-0:5.2.122-3.1.el7.src": {
+                        "openpgm-0:5.2.122-3.1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/openpgm-5.2.122-3.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "openpgm-debuginfo-0:5.2.122-3.1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/openpgm-debuginfo-5.2.122-3.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "python-crypto-0:2.6.1-1.1.el7.src": {
+                        "python-crypto-0:2.6.1-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-crypto-2.6.1-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-crypto-debuginfo-0:2.6.1-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/python-crypto-debuginfo-2.6.1-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "python-flask-1:0.10.1-5.el7.src": {
+                        "python-flask-1:0.10.1-5.el7.noarch": {
+                            "path": "MON/x86_64/os/Packages/python-flask-0.10.1-5.el7.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "python-itsdangerous-0:0.23-1.el7.src": {
+                        "python-itsdangerous-0:0.23-1.el7.noarch": {
+                            "path": "MON/x86_64/os/Packages/python-itsdangerous-0.23-1.el7.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "python-jinja2-0:2.7.2-2.el7cp.src": {
+                        "python-jinja2-0:2.7.2-2.el7cp.noarch": {
+                            "path": "MON/x86_64/os/Packages/python-jinja2-2.7.2-2.el7cp.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "python-meld3-0:0.6.10-1.el7cp.src": {
+                        "python-meld3-0:0.6.10-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-meld3-0.6.10-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-meld3-debuginfo-0:0.6.10-1.el7cp.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/python-meld3-debuginfo-0.6.10-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "python-msgpack-0:0.4.5-1.1.el7.src": {
+                        "python-msgpack-0:0.4.5-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-msgpack-0.4.5-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-msgpack-debuginfo-0:0.4.5-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/python-msgpack-debuginfo-0.4.5-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "python-werkzeug-0:0.9.1-1.el7.src": {
+                        "python-werkzeug-0:0.9.1-1.el7.noarch": {
+                            "path": "MON/x86_64/os/Packages/python-werkzeug-0.9.1-1.el7.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "python-zmq-0:14.3.1-1.1.el7.src": {
+                        "python-zmq-0:14.3.1-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/python-zmq-14.3.1-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-zmq-debuginfo-0:14.3.1-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/python-zmq-debuginfo-14.3.1-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "salt-0:2015.5.5-1.el7.src": {
+                        "salt-0:2015.5.5-1.el7.noarch": {
+                            "path": "MON/x86_64/os/Packages/salt-2015.5.5-1.el7.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "salt-minion-0:2015.5.5-1.el7.noarch": {
+                            "path": "MON/x86_64/os/Packages/salt-minion-2015.5.5-1.el7.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "supervisor-0:3.0-2.el7cp.src": {
+                        "supervisor-0:3.0-2.el7cp.noarch": {
+                            "path": "MON/x86_64/os/Packages/supervisor-3.0-2.el7cp.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "userspace-rcu-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "MON/x86_64/os/Packages/userspace-rcu-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "userspace-rcu-debuginfo-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/userspace-rcu-debuginfo-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "xmlstarlet-0:1.6.1-1.el7.src": {
+                        "xmlstarlet-0:1.6.1-1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/xmlstarlet-1.6.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "xmlstarlet-debuginfo-0:1.6.1-1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/xmlstarlet-debuginfo-1.6.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "zeromq3-1:3.2.5-1.1.el7.src": {
+                        "zeromq3-1:3.2.5-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/os/Packages/zeromq3-3.2.5-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "zeromq3-debuginfo-1:3.2.5-1.1.el7.x86_64": {
+                            "path": "MON/x86_64/debug/tree/Packages/zeromq3-debuginfo-3.2.5-1.1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }
+                }
+            }, 
+            "OSD": {
+                "src": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/babeltrace-1.2.4-3.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/ceph-10.2.3-17.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/fcgi-2.4.0-25.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "leveldb-0:1.12.0-5.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/leveldb-1.12.0-5.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/lttng-tools-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "path": "OSD/source/tree/Packages/lttng-ust-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "path": "OSD/source/tree/Packages/userspace-rcu-0.7.9-2.el7rhgs.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "xmlstarlet-0:1.6.1-1.el7.src": {
+                        "path": "OSD/source/tree/Packages/xmlstarlet-1.6.1-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }
+                }, 
+                "x86_64": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "babeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/babeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "babeltrace-debuginfo-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/babeltrace-debuginfo-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "libbabeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/libbabeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "ceph-base-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/ceph-base-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-common-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/ceph-common-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-debuginfo-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/ceph-debuginfo-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "ceph-osd-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/ceph-osd-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-selinux-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/ceph-selinux-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-test-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/ceph-test-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/libcephfs1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/libcephfs1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librados2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librados2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librbd1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librbd1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librgw2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/librgw2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-cephfs-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/python-cephfs-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rados-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/python-rados-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rbd-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/python-rbd-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "fcgi-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/fcgi-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "fcgi-debuginfo-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/fcgi-debuginfo-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "gperftools-0:2.4-8.el7.src": {
+                        "gperftools-debuginfo-0:2.4-8.el7.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/gperftools-debuginfo-2.4-8.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "leveldb-0:1.12.0-5.el7cp.src": {
+                        "leveldb-0:1.12.0-5.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/leveldb-1.12.0-5.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "leveldb-debuginfo-0:1.12.0-5.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/leveldb-debuginfo-1.12.0-5.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "lttng-tools-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/lttng-tools-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-tools-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/lttng-tools-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "lttng-ust-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/lttng-ust-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-ust-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/lttng-ust-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "userspace-rcu-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/userspace-rcu-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "userspace-rcu-debuginfo-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/userspace-rcu-debuginfo-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "xmlstarlet-0:1.6.1-1.el7.src": {
+                        "xmlstarlet-0:1.6.1-1.el7.x86_64": {
+                            "path": "OSD/x86_64/os/Packages/xmlstarlet-1.6.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "xmlstarlet-debuginfo-0:1.6.1-1.el7.x86_64": {
+                            "path": "OSD/x86_64/debug/tree/Packages/xmlstarlet-debuginfo-1.6.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }
+                }
+            }, 
+            "Tools": {
+                "src": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/babeltrace-1.2.4-3.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/ceph-10.2.3-17.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-deploy-0:1.5.36-20.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/ceph-deploy-1.5.36-20.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-iscsi-config-0:1.5-1.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/ceph-iscsi-config-1.5-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "ceph-iscsi-tools-0:1.1-1.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/ceph-iscsi-tools-1.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/fcgi-2.4.0-25.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "libntirpc-0:1.4.1-1.el7.src": {
+                        "path": "Tools/source/tree/Packages/libntirpc-1.4.1-1.el7.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/lttng-tools-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/lttng-ust-2.4.1-1.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "nfs-ganesha-0:2.4.0-3.el7cp.src": {
+                        "path": "Tools/source/tree/Packages/nfs-ganesha-2.4.0-3.el7cp.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "python-netifaces-0:0.10.4-3.el7ost.src": {
+                        "path": "Tools/source/tree/Packages/python-netifaces-0.10.4-3.el7ost.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "path": "Tools/source/tree/Packages/userspace-rcu-0.7.9-2.el7rhgs.src.rpm", 
+                        "sigkey": "f000000d", 
+                        "type": "source"
+                    }
+                }, 
+                "x86_64": {
+                    "babeltrace-0:1.2.4-3.el7cp.src": {
+                        "babeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/babeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "babeltrace-debuginfo-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/babeltrace-debuginfo-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "libbabeltrace-0:1.2.4-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/libbabeltrace-1.2.4-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-1:10.2.3-17.el7cp.src": {
+                        "ceph-base-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-base-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-common-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-common-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-debuginfo-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/ceph-debuginfo-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "ceph-fuse-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-fuse-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-mds-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-mds-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-radosgw-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-radosgw-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "ceph-selinux-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/ceph-selinux-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/libcephfs1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libcephfs1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/libcephfs1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librados2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librados2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librados2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librbd1-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librbd1-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librbd1-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librgw2-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "librgw2-devel-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/librgw2-devel-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-cephfs-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/python-cephfs-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rados-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/python-rados-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-rbd-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/python-rbd-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "rbd-mirror-1:10.2.3-17.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/rbd-mirror-10.2.3-17.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-deploy-0:1.5.36-20.el7cp.src": {
+                        "ceph-deploy-0:1.5.36-20.el7cp.noarch": {
+                            "path": "Tools/x86_64/os/Packages/ceph-deploy-1.5.36-20.el7cp.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-iscsi-config-0:1.5-1.el7cp.src": {
+                        "ceph-iscsi-config-0:1.5-1.el7cp.noarch": {
+                            "path": "Tools/x86_64/os/Packages/ceph-iscsi-config-1.5-1.el7cp.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "ceph-iscsi-tools-0:1.1-1.el7cp.src": {
+                        "ceph-iscsi-tools-0:1.1-1.el7cp.noarch": {
+                            "path": "Tools/x86_64/os/Packages/ceph-iscsi-tools-1.1-1.el7cp.noarch.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "fcgi-0:2.4.0-25.el7cp.src": {
+                        "fcgi-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/fcgi-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "fcgi-debuginfo-0:2.4.0-25.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/fcgi-debuginfo-2.4.0-25.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "gperftools-0:2.4-8.el7.src": {
+                        "gperftools-debuginfo-0:2.4-8.el7.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/gperftools-debuginfo-2.4-8.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "libntirpc-0:1.4.1-1.el7.src": {
+                        "libntirpc-0:1.4.1-1.el7.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/libntirpc-1.4.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "libntirpc-debuginfo-0:1.4.1-1.el7.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/libntirpc-debuginfo-1.4.1-1.el7.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-tools-0:2.4.1-1.el7cp.src": {
+                        "lttng-tools-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/lttng-tools-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-tools-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/lttng-tools-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "lttng-ust-0:2.4.1-1.el7cp.src": {
+                        "lttng-ust-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/lttng-ust-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "lttng-ust-debuginfo-0:2.4.1-1.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/lttng-ust-debuginfo-2.4.1-1.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "nfs-ganesha-0:2.4.0-3.el7cp.src": {
+                        "nfs-ganesha-0:2.4.0-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/nfs-ganesha-2.4.0-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "nfs-ganesha-debuginfo-0:2.4.0-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/nfs-ganesha-debuginfo-2.4.0-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }, 
+                        "nfs-ganesha-rgw-0:2.4.0-3.el7cp.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/nfs-ganesha-rgw-2.4.0-3.el7cp.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }
+                    }, 
+                    "python-netifaces-0:0.10.4-3.el7ost.src": {
+                        "python-netifaces-0:0.10.4-3.el7ost.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/python-netifaces-0.10.4-3.el7ost.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "python-netifaces-debuginfo-0:0.10.4-3.el7ost.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/python-netifaces-debuginfo-0.10.4-3.el7ost.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }, 
+                    "userspace-rcu-0:0.7.9-2.el7rhgs.src": {
+                        "userspace-rcu-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "Tools/x86_64/os/Packages/userspace-rcu-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "package"
+                        }, 
+                        "userspace-rcu-debuginfo-0:0.7.9-2.el7rhgs.x86_64": {
+                            "path": "Tools/x86_64/debug/tree/Packages/userspace-rcu-debuginfo-0.7.9-2.el7rhgs.x86_64.rpm", 
+                            "sigkey": "f000000d", 
+                            "type": "debug"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
