@@ -159,7 +159,8 @@ def main():
                                     **metadata)
     json_url = p.publish(json_file)
     log.info('OSBS JSON data at %s' % json_url)
-    write_props_file(json_url=json_url)
+    write_props_file(compose_id=c.info.compose.id,
+                     json_url=json_url)
 
 
 class BuckoError(Exception):
