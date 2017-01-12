@@ -99,6 +99,7 @@ setup(
     long_description=long_description,
     author='Ken Dreyer',
     author_email='kdreyer@redhat.com',
+    scripts=['bin/bucko'],
     license='GPLv2',
     include_package_data=True,
     install_requires=[
@@ -111,6 +112,5 @@ setup(
         'httpretty',
     ],
     packages=find_packages(exclude=['ez_setup']),
-    entry_points={'console_scripts': ['bucko = bucko:main']},
     cmdclass={'bump': BumpCommand, 'release': ReleaseCommand},
 )

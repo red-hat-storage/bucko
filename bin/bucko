@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import bucko
+
+if __name__ == '__main__':
+    bucko.main()
