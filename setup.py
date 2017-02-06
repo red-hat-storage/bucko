@@ -103,7 +103,7 @@ setup(
     license='GPLv2',
     include_package_data=True,
     install_requires=[
-        # 'koji', it's a requirement, but we can't specify it here. :(
+        'koji',
         'paramiko',
         'productmd>=1.3',
     ],
