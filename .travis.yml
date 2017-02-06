@@ -1,0 +1,18 @@
+dist: xenial
+language: python
+sudo: false
+python:
+  - 2.7
+install:
+  # koji requires requests, but Travis CI has trouble installing this for an
+  # unknown reason. To fix this, we install requests first here.
+  - pip install requests
+  - python setup.py develop
+script:
+  - py.test -v bucko/tests
+cache: pip
+addons:
+  apt:
+    packages:
+    - rpm
+    - librpm-dev
