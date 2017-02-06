@@ -28,6 +28,16 @@ class TestRepoComposeTrivial(object):
         assert repocompose.info.get_variants()
 
 
+class TestRepoComposeVariantUrl(object):
+
+    def test_get_variant_url(self, repocompose):
+        variants = repocompose.info.get_variants()
+        assert len(variants) > 0
+        result = repocompose.get_variant_url(variants[0], 'x86_64')
+        expected = os.path.join(FIXTURES_DIR, 'MON', 'x86_64', 'os')
+        assert result == expected
+
+
 class TestRepoComposeYumRepo(object):
     """ Test attributes """
 
