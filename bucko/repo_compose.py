@@ -27,8 +27,7 @@ class RepoCompose(productmd.compose.Compose):
         self.keys.update(keys)
 
     def get_variant_url(self, v, arch):
-        return posixpath.join(self.compose_path, 'compose',
-                              v.paths.repository[arch])
+        return posixpath.join(self.compose_path, v.paths.repository[arch])
 
     def get_variant_gpg_key(self, v, arch):
         """
