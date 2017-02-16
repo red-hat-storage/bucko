@@ -1,8 +1,5 @@
 import logging
 
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(levelname)s: %(message)s')
 log = logging.getLogger('bucko')
-
-# Silence requests and paramiko
-logging.getLogger('requests').setLevel(logging.WARNING)
-logging.getLogger('paramiko').setLevel(logging.WARNING)
+log.setLevel(logging.INFO)
