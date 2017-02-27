@@ -69,9 +69,9 @@ itself. See the following:
 Command-line arguments
 ----------------------
 
-* ``--compose`` HTTP(S) URL to a Distill/Pungi compose. If
-            unspecified, this program will parse the ``COMPOSE_URL`` and
-            ``CI_MESSAGE`` environment variables for this information.
+* ``--compose`` HTTP(S) URL to a Distill/Pungi compose. If unspecified, this
+  program will parse the ``COMPOSE_URL`` and ``CI_MESSAGE`` environment
+  variables for this information.
 
 Configuration file
 ------------------
