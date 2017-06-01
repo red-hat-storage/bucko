@@ -23,16 +23,28 @@ def compose_url_from_env():
     Parse COMPOSE_URL and CI_MESSAGE environment variables for a URL.
 
     If we can't find a URL, return None.
+
+    Exact rules:
+      1. Search the JSON in CI_MESSAGE first, return COMPOSE_URL key.
+      2. If CI_MESSAGE is not valid JSON, or lacks COMPOSE_URL key, fall back
+         to using the COMPOSE_URL environment variable. The assumption here is
+         that this is a by-hand Jenkins job.
+      3. If COMPOSE_URL env var is empty (or undefined), return None.
     """
     compose_url = os.environ.get('COMPOSE_URL', '')
-    if compose_url != '':
-        return compose_url
+    if compose_url == '':
+        compose_url = None
     try:
         msg = json.loads(os.environ.get('CI_MESSAGE', ''))
     except ValueError:
-        return None
+        # No CI_MESSAGE JSON. Falling back to COMPOSE_URL environment var
+        return compose_url
     log.info('Parsing CI_MESSAGE: %s' % pformat(msg))
-    return msg['COMPOSE_URL']
+    try:
+        return msg['COMPOSE_URL']
+    except KeyError:
+        # CI_MESSAGE JSON lacks COMPOSE_URL. Falling back to COMPOSE_URL envvar
+        return compose_url
 
 
 def config():

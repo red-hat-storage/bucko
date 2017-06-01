@@ -32,9 +32,14 @@ class TestComposeUrlFromEnv(object):
         monkeypatch.setenv('CI_MESSAGE', '')
         assert bucko.compose_url_from_env() == 'http://foo'
 
-    def test_ci_message(self, monkeypatch):
-        monkeypatch.setenv('COMPOSE_URL', '')
+    def test_compose_ci_message(self, monkeypatch):
+        monkeypatch.setenv('COMPOSE_URL', 'http://donotuse')
         monkeypatch.setenv('CI_MESSAGE', '{"COMPOSE_URL": "http://foo"}')
+        assert bucko.compose_url_from_env() == 'http://foo'
+
+    def test_distgit_ci_message(self, monkeypatch):
+        monkeypatch.setenv('COMPOSE_URL', 'http://foo')
+        monkeypatch.setenv('CI_MESSAGE', '{"namespace": "rpms"}')
         assert bucko.compose_url_from_env() == 'http://foo'
 
 

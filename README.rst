@@ -39,7 +39,9 @@ Let's say Jenkins sets a more complicated environment variable for us.
     echo $CI_MESSAGE
     {"COMPOSE_URL": "http://example/MYCOMPOSE-1234.t.0/"}
 
-Bucko will parse the compose URL from ``CI_MESSAGE`` for us::
+As long as ``CI_MESSAGE`` is valid JSON and has a ``"COMPOSE_URL"`` key
+defined in the message, Bucko will parse the compose URL from ``CI_MESSAGE``
+for us::
 
     k5start -U -f /etc/my-jenkins.keytab -- bucko
 
