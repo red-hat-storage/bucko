@@ -15,6 +15,8 @@ def test_version():
 
 
 class TestComposeUrlFromEnv(object):
+    # Note: when we assert "is None", that effectively means we want the user
+    # to specify a "--compose" on the commandline.
     def test_no_env(self, monkeypatch):
         monkeypatch.delenv('COMPOSE_URL', raising=False)
         monkeypatch.delenv('CI_MESSAGE', raising=False)
