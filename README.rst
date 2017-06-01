@@ -58,13 +58,13 @@ Bucko does the following actions:
 Integration with Pungi
 ----------------------
 
-Eventually some or all of bucko's functionality may be implemented in Pungi
-itself. See the following:
+Much of bucko's functionality has now been implemented in Pungi itself. See the
+following:
 
 * https://github.com/release-engineering/productmd/issues/41
   - productmd support for querying directly via HTTP (In productmd v1.3)
-* https://pagure.io/pungi/issue/485 - metadata for scratch builds (will be
-  released in the next Pungi release after v4.1.13)
+* https://pagure.io/pungi/issue/485 - metadata for scratch builds (In Pungi
+  v4.1.14)
 * https://pagure.io/pungi/issue/486 - unified containers (In Pungi v4.1.12)
 * https://pagure.io/pungi/issue/487 - GPG verification during container build
   (In Pungi v4.1.12)
