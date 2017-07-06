@@ -43,7 +43,17 @@ class KojiBuilder(object):
             msg = 'Build Target %s is not present in %s' % (target, self.hub)
             raise RuntimeError(msg)
 
-        config = {'scratch': scratch, 'yum_repourls': repos}
+        # Determine git branch name from our scm value
+        if '#' not in scm:
+            raise RuntimeError('no branch defined in scm %s' % scm)
+        full_branch = scm.split('#')[1]  # eg "origin/foo-2-rhel-7"
+        git_branch = full_branch
+        if full_branch.startswith('origin/'):
+            git_branch = full_branch[len('origin/'):]  # eg "foo-2-rhel-7"
+
+        config = {'scratch': scratch,
+                  'yum_repourls': repos,
+                  'git_branch': git_branch}
 
         return self.session.buildContainer(scm, target, config, priority=None)
 
