@@ -87,7 +87,7 @@ falling back to ``$HOME/.bucko.conf``.
 Sample ``bucko.conf`` contents::
 
     [publish]
-    # sftp:// or --file:// location to publish the .repo file.
+    # sftp:// or file:// location to publish the .repo file.
     push = sftp:///home/remote/kdreyer/public_html/osbs
 
     #  HTTP(S) URL to the publish directory for OSBS to contact.
