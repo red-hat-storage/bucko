@@ -110,15 +110,31 @@ def get_compose(compose_url, configp):
     return c
 
 
-def build_container(repo_url, configp):
+def get_branch(compose):
+    """ Return a dist-git branch name for this compose. """
+    name = compose.info.release.short.lower()
+    if name == 'rhceph':
+        name = 'ceph'
+    version = compose.info.release.version
+    if name == 'ceph' and version.startswith('2'):
+        # special-case ceph 2.y branch names
+        version = 2
+    return '%s-%s-rhel-7' % (name, version)
+
+
+def build_container(repo_url, branch, configp):
     """ Build a container with Koji. """
     kconf = dict(configp.items('koji'))
     koji = KojiBuilder(hub=kconf['hub'],
                        web=kconf['web'],
                        krbservice=kconf['krbservice'])
     log.info('Building container at %s' % kconf['hub'])
-    task_id = koji.build_container(scm=kconf['scm'],
-                                   target=kconf['target'],
+    # Interpolate %(branch)s for this compose.
+    scm = kconf['scm'] % {'branch': branch}
+    target = kconf['target'] % {'branch': branch}
+    task_id = koji.build_container(scm=scm,
+                                   target=target,
+                                   branch=branch,
                                    repos=[repo_url])
     # Show information to the console.
     koji.watch_task(task_id)
@@ -161,8 +177,11 @@ def main():
     repo_url = p.publish(filename)
     log.info('Published %s' % repo_url)
 
+    # Determine scm and brew target branch name
+    branch = get_branch(c)
+
     # Do a Koji build
-    metadata = build_container(repo_url, configp)
+    metadata = build_container(repo_url, branch, configp)
 
     # Store and publish our information about this build
     metadata['compose_url'] = compose_url

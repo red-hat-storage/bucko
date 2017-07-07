@@ -104,6 +104,7 @@ class TestBuildContainer(object):
     def test_build_container(self, config, monkeypatch):
         monkeypatch.setattr('bucko.KojiBuilder', FakeKojiBuilder)
         repo_url = 'http:///example.com/example.repo'
-        results = bucko.build_container(repo_url, config)
+        branch = 'foo-3.0-rhel-7'
+        results = bucko.build_container(repo_url, branch, config)
         assert results['koji_task'] == 1234
         assert results['repositories'] == ['http://registry.example.com/foo']

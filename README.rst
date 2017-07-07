@@ -96,8 +96,8 @@ Sample ``bucko.conf`` contents::
     [koji]
     hub = https://koji.fedoraproject.org/kojihub
     web = http://koji.fedoraproject.org/koji
-    scm = git://example.com/rpms/rhceph-rhel7-docker#origin/ceph-2-rhel-7
-    target = ceph-2-rhel-7-docker-candidate
+    scm = git://example.com/rpms/rhceph-rhel7-docker#origin/%(branch)s
+    target = %(branch)s-docker-candidate
     krbservice = brewhub
 
     [keys]
@@ -108,3 +108,7 @@ Sample ``bucko.conf`` contents::
     # HTTP URL to RHEL 7 Server content
     url = http://example.com/content/dist/rhel/server/7/7Server/$basearch/os/
     gpgkey = fd431d51
+
+Bucko will interpolate the ``%(branch)s`` format string according to the
+compose's metadata. For example, bucko will choose a ``branch`` value of
+``ceph-3.0-rhel-7`` when processing a ``RHCEPH 3.0`` compose.
