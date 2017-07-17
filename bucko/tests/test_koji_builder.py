@@ -61,7 +61,7 @@ class TestKojiBuilder(object):
         k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
         scm = 'git://example.com/rpms/rhceph-rhel7-docker#origin/ceph-2-rhel-7'
         target = 'ceph-2-rhel-7-docker-candidate'
-        result = k.build_container(scm, target, [])
+        result = k.build_container(scm, target, 'ceph-2-rhel-7', [])
         assert result == 1234
 
     def test_watch_task(self, monkeypatch, capsys):
