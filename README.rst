@@ -34,12 +34,12 @@ Example: running unattended from CI_MESSAGE JSON
 ------------------------------------------------
 
 Let's say Jenkins sets a more complicated environment variable for us.
-``CI_MESSAGE`` contains JSON data with the COMPOSE_URL embedded in it::
+``CI_MESSAGE`` contains JSON data with the compose_url embedded in it::
 
     echo $CI_MESSAGE
-    {"COMPOSE_URL": "http://example/MYCOMPOSE-1234.t.0/"}
+    {"compose_url": "http://example/MYCOMPOSE-1234.t.0/"}
 
-As long as ``CI_MESSAGE`` is valid JSON and has a ``"COMPOSE_URL"`` key
+As long as ``CI_MESSAGE`` is valid JSON and has a ``"compose_url"`` key
 defined in the message, Bucko will parse the compose URL from ``CI_MESSAGE``
 for us::
 

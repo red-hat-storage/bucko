@@ -41,9 +41,9 @@ def compose_url_from_env():
         return compose_url
     log.info('Parsing CI_MESSAGE: %s' % pformat(msg))
     try:
-        return msg['COMPOSE_URL']
+        return msg['compose_url']
     except KeyError:
-        # CI_MESSAGE JSON lacks COMPOSE_URL. Falling back to COMPOSE_URL envvar
+        # CI_MESSAGE JSON lacks compose_url. Falling back to COMPOSE_URL envvar
         return compose_url
 
 
