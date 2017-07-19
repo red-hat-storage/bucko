@@ -101,6 +101,18 @@ class RepoCompose(productmd.compose.Compose):
                 config.set(name, 'gpgcheck', 1)
                 config.set(name, 'gpgkey', self.keys[bp.gpgkey])
 
+        # And our base product "extras" repository, if configured.
+        if hasattr(bp, 'extras'):
+            name = bp.short.lower() + '-' + bp.version + '-extras'
+            config.add_section(name)
+            config.set(name, 'name', bp.name + ' ' + bp.version + ' extras')
+            config.set(name, 'baseurl', bp.extras)
+            config.set(name, 'enabled', 1)
+            config.set(name, 'gpgcheck', 0)
+            if getattr(bp, 'gpgkey', None) is not None:
+                config.set(name, 'gpgcheck', 1)
+                config.set(name, 'gpgkey', self.keys[bp.gpgkey])
+
         with open(filename, 'wb') as configfile:
             config.write(configfile)
         return filename

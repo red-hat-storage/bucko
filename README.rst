@@ -107,6 +107,9 @@ Sample ``bucko.conf`` contents::
     [base_product]
     # HTTP URL to RHEL 7 Server content
     url = http://example.com/content/dist/rhel/server/7/7Server/$basearch/os/
+    # This "extras" URL is optional. Add it if you need an "extras" repo
+    # defined:
+    extras = http://example.com/content/dist/rhel/server/7/7Server/$basearch/extras/os/
     gpgkey = fd431d51
 
 Bucko will interpolate the ``%(branch)s`` format string according to the

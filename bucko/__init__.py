@@ -71,10 +71,14 @@ def get_base_product_config(configp):
     except ConfigParser.Error as e:
         raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
     try:
+        extras = configp.get('base_product', 'extras')
+    except ConfigParser.Error:
+        extras = None
+    try:
         gpgkey = configp.get('base_product', 'gpgkey')
     except ConfigParser.Error:
         gpgkey = None
-    return (url, gpgkey)
+    return (url, extras, gpgkey)
 
 
 def write_metadata_file(filename, **kwargs):
@@ -102,11 +106,12 @@ def get_compose(compose_url, configp):
     # Sanity-check that this is a layered product compose.
     if not c.info.release.is_layered:
         raise RuntimeError('%s must be layered' % c.info.release.short)
-    (base_product_url, base_product_gpgkey) = get_base_product_config(configp)
+    (bp_url, bp_extras, bp_gpgkey) = get_base_product_config(configp)
     # Store extra base_product attrs within our ComposeInfo.BaseProduct.
     # c.write_yum_repo_file() will use these.
-    c.info.base_product.url = base_product_url
-    c.info.base_product.gpgkey = base_product_gpgkey
+    c.info.base_product.url = bp_url
+    c.info.base_product.extras = bp_extras
+    c.info.base_product.gpgkey = bp_gpgkey
     return c
 
 
