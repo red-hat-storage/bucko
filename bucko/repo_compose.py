@@ -23,7 +23,7 @@ class RepoCompose(productmd.compose.Compose):
     def __init__(self, path, keys={}):
         super(RepoCompose, self).__init__(path)
         # Dict of possible GPG signing keys:
-        self.keys = GPG_KEYS
+        self.keys = GPG_KEYS.copy()
         self.keys.update(keys)
 
     def get_variant_url(self, v, arch):
