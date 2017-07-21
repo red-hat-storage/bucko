@@ -38,9 +38,11 @@ class TestComposeUrlFromEnv(object):
         assert bucko.compose_url_from_env() == 'http://foo'
 
     def test_distgit_ci_message(self, monkeypatch):
-        monkeypatch.setenv('COMPOSE_URL', 'http://foo')
-        monkeypatch.setenv('CI_MESSAGE', '{"namespace": "rpms"}')
-        assert bucko.compose_url_from_env() == 'http://foo'
+        tmpl = 'http://foo/%(branch)s/latest-RHCEPH-%(major)s-%(distro)s'
+        monkeypatch.setenv('COMPOSE_URL', tmpl)
+        monkeypatch.setenv('CI_MESSAGE', '{"branch": "ceph-3.0-rhel-7"}')
+        expected = 'http://foo/ceph-3.0-rhel-7/latest-RHCEPH-3-RHEL-7'
+        assert bucko.compose_url_from_env() == expected
 
 
 class TestGetPublisher(object):

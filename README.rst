@@ -30,8 +30,8 @@ we're set::
 
     k5start -U -f /etc/my-jenkins.keytab -- bucko
 
-Example: running unattended from CI_MESSAGE JSON
-------------------------------------------------
+Example: running unattended from CI_MESSAGE JSON compose_url
+------------------------------------------------------------
 
 Let's say Jenkins sets a more complicated environment variable for us.
 ``CI_MESSAGE`` contains JSON data with the compose_url embedded in it::
@@ -44,6 +44,26 @@ defined in the message, Bucko will parse the compose URL from ``CI_MESSAGE``
 for us::
 
     k5start -U -f /etc/my-jenkins.keytab -- bucko
+
+Example: running unattended from CI_MESSAGE JSON without compose_url key
+------------------------------------------------------------------------
+
+Building on the previous example, let's say Jenkins sets ``CI_MESSAGE`` for us,
+but that JSON data does not have a compose_url key. It just has a dist-git
+branch name::
+
+    echo $CI_MESSAGE
+    {"branch": "ceph-3.0-rhel-7"}
+
+In this instance, bucko will read that branch name and combine it with the
+COMPOSE_URL environment variable when it is defined as a Python format string::
+
+    echo $COMPOSE_URL
+    http://example/%(branch)s/latest-RHCEPH-%(major)s-%(distro)s/
+
+And the resulting compose Bucko looks for will be::
+
+    http://example/ceph-3.0-rhel-7/latest-RHCEPH-3-RHEL-7/
 
 How it works
 ------------

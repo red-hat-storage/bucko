@@ -18,6 +18,35 @@ __version__ = '1.0.0'
 __all__ = ['log']
 
 
+def parse_ci_message(msg, compose_url):
+    """
+    Parse CI_MESSAGE JSON data (dict)
+    """
+    log.info('Parsing CI_MESSAGE: %s' % pformat(msg))
+    try:
+        return msg['compose_url']
+    except KeyError:
+        log.info('CI_MESSAGE JSON lacks "compose_url" key.')
+    # Not a product-build-done message?
+    try:
+        # Maybe CI_MESSAGE was a dist-git message?
+        branch = msg['branch']
+    except KeyError:
+        log.info('CI_MESSAGE JSON lacks "branch" key.')
+        log.info('Falling back to COMPOSE_URL env variable.')
+        return compose_url
+    # Parse our "branch" JSON key and interpolate values into the
+    # COMPOSE_URL environment variable (format string).
+    (_, version, distro) = branch.split('-', 2)
+    (major, _) = version.split('.', 1)
+    distro = distro.upper()
+    result = compose_url % {'branch': branch,
+                            'major': major,
+                            'distro': distro}
+    log.info('transformed %s format string to %s' % (compose_url, result))
+    return result
+
+
 def compose_url_from_env():
     """
     Parse COMPOSE_URL and CI_MESSAGE environment variables for a URL.
@@ -25,11 +54,16 @@ def compose_url_from_env():
     If we can't find a URL, return None.
 
     Exact rules:
-      1. Search the JSON in CI_MESSAGE first, return COMPOSE_URL key.
-      2. If CI_MESSAGE is not valid JSON, or lacks COMPOSE_URL key, fall back
-         to using the COMPOSE_URL environment variable. The assumption here is
-         that this is a by-hand Jenkins job.
-      3. If COMPOSE_URL env var is empty (or undefined), return None.
+      1. Search the JSON in CI_MESSAGE first, return compose_url key.
+           {"compose_url": "http://example.com/foo"}
+      2. If the JSON lacks a compose_url key, search for a "branch" key
+         instead. Parse that, and interpolate branch/major into the COMPOSE_URL
+         env variable.
+           {"branch": "ceph-3.0-rhel-7"}
+           COMPOSE_URL=http://example.com/(branch)s/latest-RHCEPH-(major)s
+      3. If CI_MESSAGE is not valid JSON, fall back to checking the COMPOSE_URL
+         env var. The assumption here is that this is a manual Jenkins job run.
+      4. If COMPOSE_URL env var is empty (or undefined), return None.
     """
     compose_url = os.environ.get('COMPOSE_URL', '')
     if compose_url == '':
@@ -39,12 +73,7 @@ def compose_url_from_env():
     except ValueError:
         # No CI_MESSAGE JSON. Falling back to COMPOSE_URL environment var
         return compose_url
-    log.info('Parsing CI_MESSAGE: %s' % pformat(msg))
-    try:
-        return msg['compose_url']
-    except KeyError:
-        # CI_MESSAGE JSON lacks compose_url. Falling back to COMPOSE_URL envvar
-        return compose_url
+    return parse_ci_message(msg, compose_url)
 
 
 def config():
