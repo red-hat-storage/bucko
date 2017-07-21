@@ -64,10 +64,10 @@ def get_publisher(configp):
     return Publisher(push_url, http_url)
 
 
-def get_base_product_url(configp):
-    """ Look up the base_product's url from a ConfigParser object. """
+def get_base_product_url(configp, section):
+    """ Look up the base product url from a ConfigParser section. """
     try:
-        return configp.get('base_product', 'url')
+        return configp.get(section, 'url')
     except ConfigParser.Error as e:
         raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
 
@@ -92,11 +92,14 @@ def write_props_file(**kwargs):
 
 def get_compose(compose_url, configp):
     """ Construct a RepoCompose object according to our ConfigParser. """
-    bp_url = get_base_product_url(configp)
-    bp_gpgkey = configp.get('base_product', 'gpgkey', vars={'gpgkey': None})
-    bp_extras = configp.get('base_product', 'extras', vars={'extras': None})
     keys = dict(configp.items('keys'))
-    return RepoCompose(compose_url, bp_url, bp_gpgkey, bp_extras, keys)
+    compose = RepoCompose(compose_url, keys)
+    section = get_branch(compose) + '-base'  # eg "ceph-2-rhel-7-base"
+    bp_url = get_base_product_url(configp, section)
+    bp_gpgkey = configp.get(section, 'gpgkey', vars={'gpgkey': None})
+    bp_extras = configp.get(section, 'extras', vars={'extras': None})
+    compose.set_base_product(bp_url, bp_gpgkey, bp_extras)
+    return compose
 
 
 def get_branch(compose):

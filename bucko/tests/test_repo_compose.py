@@ -15,29 +15,30 @@ INTERNAL_KEYS = {'f000000d': '/etc/RPM-GPG-KEY-f00d'}
 
 @pytest.fixture
 def repocompose():
-    path = FIXTURES_DIR
+    compose = RepoCompose(FIXTURES_DIR, INTERNAL_KEYS)
     bp_url = 'http://example.com/foo'
     bp_gpgkey = None
     bp_extras = None
-    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
+    compose.set_base_product(bp_url, bp_gpgkey, bp_extras)
+    return compose
 
 
 @pytest.fixture
-def repocompose_bp_signed():
-    path = FIXTURES_DIR
+def repocompose_bp_signed(repocompose):
     bp_url = 'http://example.com/foo'
     bp_gpgkey = 'f000000d'
     bp_extras = None
-    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
+    repocompose.set_base_product(bp_url, bp_gpgkey, bp_extras)
+    return repocompose
 
 
 @pytest.fixture
-def repocompose_extras():
-    path = FIXTURES_DIR
+def repocompose_extras(repocompose):
     bp_url = 'http://example.com/foo'
     bp_gpgkey = 'f000000d'
     bp_extras = 'http://example.com/foo-extras'
-    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
+    repocompose.set_base_product(bp_url, bp_gpgkey, bp_extras)
+    return repocompose
 
 
 class TestRepoComposeTrivial(object):

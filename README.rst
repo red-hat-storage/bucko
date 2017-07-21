@@ -104,7 +104,7 @@ Sample ``bucko.conf`` contents::
     # List any extra keys here. For example, an internal signing key:
     f000000d = http://internal.example.com/keys/RPM-GPG-KEY-internal-custom
 
-    [base_product]
+    [ceph-3.0-rhel-7-base]
     # HTTP URL to RHEL 7 Server content
     url = http://example.com/content/dist/rhel/server/7/7Server/$basearch/os/
     # This "extras" URL is optional. Add it if you need an "extras" repo
@@ -115,3 +115,6 @@ Sample ``bucko.conf`` contents::
 Bucko will interpolate the ``%(branch)s`` format string according to the
 compose's metadata. For example, bucko will choose a ``branch`` value of
 ``ceph-3.0-rhel-7`` when processing a ``RHCEPH 3.0`` compose.
+
+The ``[*-base]`` sections are unique per branch. Please define one for each
+branch you expect to use.

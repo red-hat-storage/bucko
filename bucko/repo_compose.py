@@ -20,23 +20,24 @@ GPG_KEYS = {
 class RepoCompose(productmd.compose.Compose):
     """ An online compose for which we will write a yum .repo file. """
 
-    def __init__(self,
-                 path,
-                 base_product_url,
-                 base_product_key=None,
-                 base_product_extras=None,
-                 keys={}):
+    def __init__(self, path, keys={}):
         super(RepoCompose, self).__init__(path)
         # Sanity-check that this is a layered product compose.
         if not self.info.release.is_layered:
             raise RuntimeError('%s must be layered' % self.info.release.short)
         # Yum repository settings for our base_product:
-        self.info.base_product.url = base_product_url
-        self.info.base_product.gpgkey = base_product_key
-        self.info.base_product.extras = base_product_extras
+        self.info.base_product.url = None
+        self.info.base_product.gpgkey = None
+        self.info.base_product.extras = None
         # Dict of possible GPG signing keys:
         self.keys = GPG_KEYS.copy()
         self.keys.update(keys)
+
+    def set_base_product(self, url, gpgkey=None, extras=None):
+        # Yum repository settings for our base_product:
+        self.info.base_product.url = url
+        self.info.base_product.gpgkey = gpgkey
+        self.info.base_product.extras = extras
 
     def get_variant_url(self, v, arch):
         return posixpath.join(self.compose_path, v.paths.repository[arch])

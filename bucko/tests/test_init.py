@@ -64,8 +64,9 @@ class TestGetCompose(object):
     def config(self):
         config = ConfigParser.ConfigParser()
         config.add_section('keys')
-        config.add_section('base_product')
-        config.set('base_product', 'url', 'http:///example.com/baseproduct')
+        branch = 'myproduct-2.1-rhel-7'
+        config.add_section(branch + '-base')
+        config.set(branch + '-base', 'url', 'http:///example.com/baseproduct')
         return config
 
     def test_get_compose(self, config):
