@@ -31,6 +31,15 @@ def repocompose_bp_signed():
     return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
 
 
+@pytest.fixture
+def repocompose_extras():
+    path = FIXTURES_DIR
+    bp_url = 'http://example.com/foo'
+    bp_gpgkey = 'f000000d'
+    bp_extras = 'http://example.com/foo-extras'
+    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
+
+
 class TestRepoComposeTrivial(object):
     """ Test simple mechanics """
     def test_inheritance(self):
@@ -86,3 +95,11 @@ class TestRepoComposeYumRepo(object):
         config.read(path)
         assert config.get('rhel-7', 'gpgcheck') == '1'
         assert config.get('rhel-7', 'gpgkey') == '/etc/RPM-GPG-KEY-f00d'
+
+    def test_base_product_extras(self, repocompose_extras):
+        # extras is set, so it will be present in the .repo file.
+        path = repocompose_extras.write_yum_repo_file()
+        config = ConfigParser.RawConfigParser()
+        config.read(path)
+        assert config.get('rhel-7-extras', 'gpgcheck') == '1'
+        assert config.get('rhel-7-extras', 'gpgkey') == '/etc/RPM-GPG-KEY-f00d'
