@@ -85,11 +85,8 @@ def config():
 
 def get_publisher(configp):
     """ Look up the push url and http url from a ConfigParser object. """
-    try:
-        push_url = configp.get('publish', 'push')
-        http_url = configp.get('publish', 'http')
-    except ConfigParser.Error as e:
-        raise SystemExit('Problem parsing bucko.conf: %s' % e.message)
+    push_url = lookup(configp, 'publish', 'push')
+    http_url = lookup(configp, 'publish', 'http')
     return Publisher(push_url, http_url)
 
 
