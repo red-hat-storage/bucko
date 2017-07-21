@@ -46,7 +46,7 @@ class TestComposeUrlFromEnv(object):
 class TestGetPublisher(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.RawConfigParser()
+        config = ConfigParser.ConfigParser()
         config.add_section('publish')
         config.set('publish', 'push', 'file:///mypath')
         config.set('publish', 'http', 'http:///example.com/mypath')
@@ -62,7 +62,7 @@ class TestGetPublisher(object):
 class TestGetCompose(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.RawConfigParser()
+        config = ConfigParser.ConfigParser()
         config.add_section('keys')
         config.add_section('base_product')
         config.set('base_product', 'url', 'http:///example.com/baseproduct')
@@ -92,7 +92,7 @@ class FakeKojiBuilder(object):
 class TestBuildContainer(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.RawConfigParser()
+        config = ConfigParser.ConfigParser()
         config.add_section('koji')
         config.set('koji', 'hub', 'dummyhub')
         config.set('koji', 'web', 'dummyweb')

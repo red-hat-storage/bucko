@@ -49,7 +49,7 @@ def compose_url_from_env():
 
 def config():
     """ Load a bucko configuration file and return a ConfigParser object. """
-    configp = ConfigParser.RawConfigParser()
+    configp = ConfigParser.ConfigParser()
     configp.read(['bucko.conf', os.path.expanduser('~/.bucko.conf')])
     return configp
 
@@ -70,14 +70,8 @@ def get_base_product_config(configp):
         url = configp.get('base_product', 'url')
     except ConfigParser.Error as e:
         raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
-    try:
-        extras = configp.get('base_product', 'extras')
-    except ConfigParser.Error:
-        extras = None
-    try:
-        gpgkey = configp.get('base_product', 'gpgkey')
-    except ConfigParser.Error:
-        gpgkey = None
+    extras = configp.get('base_product', 'extras', vars={'extras': None})
+    gpgkey = configp.get('base_product', 'gpgkey', vars={'gpgkey': None})
     return (url, extras, gpgkey)
 
 
