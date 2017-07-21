@@ -10,6 +10,8 @@ except ImportError:
 TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
 FIXTURES_DIR = os.path.join(TESTS_DIR, 'fixtures')
 
+INTERNAL_KEYS = {'f000000d': '/etc/RPM-GPG-KEY-f00d'}
+
 
 @pytest.fixture
 def repocompose():
@@ -17,8 +19,16 @@ def repocompose():
     bp_url = 'http://example.com/foo'
     bp_gpgkey = None
     bp_extras = None
-    keys = {'f000000d': '/etc/RPM-GPG-KEY-f00d'}
-    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, keys)
+    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
+
+
+@pytest.fixture
+def repocompose_bp_signed():
+    path = FIXTURES_DIR
+    bp_url = 'http://example.com/foo'
+    bp_gpgkey = 'f000000d'
+    bp_extras = None
+    return RepoCompose(path, bp_url, bp_gpgkey, bp_extras, INTERNAL_KEYS)
 
 
 class TestRepoComposeTrivial(object):
@@ -69,10 +79,9 @@ class TestRepoComposeYumRepo(object):
         config.read(path)
         assert config.get('rhel-7', 'gpgcheck') == '0'
 
-    def test_base_product_gpgkey(self, repocompose):
-        # Set gpgkey, so it will be present in the .repo file.
-        repocompose.info.base_product.gpgkey = 'f000000d'
-        path = repocompose.write_yum_repo_file()
+    def test_base_product_gpgkey(self, repocompose_bp_signed):
+        # gpgkey is set, so it will be present in the .repo file.
+        path = repocompose_bp_signed.write_yum_repo_file()
         config = ConfigParser.RawConfigParser()
         config.read(path)
         assert config.get('rhel-7', 'gpgcheck') == '1'
