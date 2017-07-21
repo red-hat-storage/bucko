@@ -64,15 +64,12 @@ def get_publisher(configp):
     return Publisher(push_url, http_url)
 
 
-def get_base_product_config(configp):
-    """ Look up the url and gpgkey from a ConfigParser object. """
+def get_base_product_url(configp):
+    """ Look up the base_product's url from a ConfigParser object. """
     try:
-        url = configp.get('base_product', 'url')
+        return configp.get('base_product', 'url')
     except ConfigParser.Error as e:
         raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
-    extras = configp.get('base_product', 'extras', vars={'extras': None})
-    gpgkey = configp.get('base_product', 'gpgkey', vars={'gpgkey': None})
-    return (url, extras, gpgkey)
 
 
 def write_metadata_file(filename, **kwargs):
@@ -94,19 +91,12 @@ def write_props_file(**kwargs):
 
 
 def get_compose(compose_url, configp):
-    """ Construct a RepoCompose object. """
+    """ Construct a RepoCompose object according to our ConfigParser. """
+    bp_url = get_base_product_url(configp)
+    bp_gpgkey = configp.get('base_product', 'gpgkey', vars={'gpgkey': None})
+    bp_extras = configp.get('base_product', 'extras', vars={'extras': None})
     keys = dict(configp.items('keys'))
-    c = RepoCompose(compose_url, keys)
-    # Sanity-check that this is a layered product compose.
-    if not c.info.release.is_layered:
-        raise RuntimeError('%s must be layered' % c.info.release.short)
-    (bp_url, bp_extras, bp_gpgkey) = get_base_product_config(configp)
-    # Store extra base_product attrs within our ComposeInfo.BaseProduct.
-    # c.write_yum_repo_file() will use these.
-    c.info.base_product.url = bp_url
-    c.info.base_product.extras = bp_extras
-    c.info.base_product.gpgkey = bp_gpgkey
-    return c
+    return RepoCompose(compose_url, bp_url, bp_gpgkey, bp_extras, keys)
 
 
 def get_branch(compose):

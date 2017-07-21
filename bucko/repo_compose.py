@@ -20,8 +20,20 @@ GPG_KEYS = {
 class RepoCompose(productmd.compose.Compose):
     """ An online compose for which we will write a yum .repo file. """
 
-    def __init__(self, path, keys={}):
+    def __init__(self,
+                 path,
+                 base_product_url,
+                 base_product_key=None,
+                 base_product_extras=None,
+                 keys={}):
         super(RepoCompose, self).__init__(path)
+        # Sanity-check that this is a layered product compose.
+        if not self.info.release.is_layered:
+            raise RuntimeError('%s must be layered' % self.info.release.short)
+        # Yum repository settings for our base_product:
+        self.info.base_product.url = base_product_url
+        self.info.base_product.gpgkey = base_product_key
+        self.info.base_product.extras = base_product_extras
         # Dict of possible GPG signing keys:
         self.keys = GPG_KEYS.copy()
         self.keys.update(keys)
@@ -90,26 +102,25 @@ class RepoCompose(productmd.compose.Compose):
 
         # Also include our base product repository.
         bp = self.info.base_product
-        if hasattr(bp, 'url'):
-            name = bp.short.lower() + '-' + bp.version
-            config.add_section(name)
-            config.set(name, 'name', bp.name + ' ' + bp.version)
-            config.set(name, 'baseurl', bp.url)
-            config.set(name, 'enabled', 1)
-            config.set(name, 'gpgcheck', 0)
-            if getattr(bp, 'gpgkey', None) is not None:
-                config.set(name, 'gpgcheck', 1)
-                config.set(name, 'gpgkey', self.keys[bp.gpgkey])
+        name = bp.short.lower() + '-' + bp.version
+        config.add_section(name)
+        config.set(name, 'name', bp.name + ' ' + bp.version)
+        config.set(name, 'baseurl', bp.url)
+        config.set(name, 'enabled', 1)
+        config.set(name, 'gpgcheck', 0)
+        if bp.gpgkey is not None:
+            config.set(name, 'gpgcheck', 1)
+            config.set(name, 'gpgkey', self.keys[bp.gpgkey])
 
         # And our base product "extras" repository, if configured.
-        if hasattr(bp, 'extras'):
+        if bp.extras is not None:
             name = bp.short.lower() + '-' + bp.version + '-extras'
             config.add_section(name)
             config.set(name, 'name', bp.name + ' ' + bp.version + ' extras')
             config.set(name, 'baseurl', bp.extras)
             config.set(name, 'enabled', 1)
             config.set(name, 'gpgcheck', 0)
-            if getattr(bp, 'gpgkey', None) is not None:
+            if bp.gpgkey is not None:
                 config.set(name, 'gpgcheck', 1)
                 config.set(name, 'gpgkey', self.keys[bp.gpgkey])
 
