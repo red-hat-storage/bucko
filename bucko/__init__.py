@@ -93,12 +93,13 @@ def get_publisher(configp):
     return Publisher(push_url, http_url)
 
 
-def get_base_product_url(configp, section):
-    """ Look up the base product url from a ConfigParser section. """
+def lookup(configp, section, option, fatal=True):
+    """ Gracefully (or not) look up an option from a ConfigParser section. """
     try:
-        return configp.get(section, 'url')
+        return configp.get(section, option)
     except ConfigParser.Error as e:
-        raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
+        if fatal:
+            raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
 
 
 def write_metadata_file(filename, **kwargs):
@@ -124,9 +125,9 @@ def get_compose(compose_url, configp):
     keys = dict(configp.items('keys'))
     compose = RepoCompose(compose_url, keys)
     section = get_branch(compose) + '-base'  # eg "ceph-2-rhel-7-base"
-    bp_url = get_base_product_url(configp, section)
-    bp_gpgkey = configp.get(section, 'gpgkey', vars={'gpgkey': None})
-    bp_extras = configp.get(section, 'extras', vars={'extras': None})
+    bp_url = lookup(configp, section, 'url')
+    bp_gpgkey = lookup(configp, section, 'gpgkey', fatal=False)
+    bp_extras = lookup(configp, section, 'extras', fatal=False)
     compose.set_base_product(bp_url, bp_gpgkey, bp_extras)
     return compose
 
