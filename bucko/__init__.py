@@ -20,7 +20,12 @@ __all__ = ['log']
 
 def parse_ci_message(msg, compose_url):
     """
-    Parse CI_MESSAGE JSON data (dict)
+    Parse CI_MESSAGE JSON data and return a compose URL according to our rules.
+
+    :param         msg: ``dict`` of JSON data from CI_MESSAGE environment var
+    :param compose_url: ``str`` COMPOSE_URL environment var (might be a format
+                        string that we will interpolate from msg values.)
+    :return: ``str`` compose URL.
     """
     log.info('Parsing CI_MESSAGE: %s' % pformat(msg))
     try:
