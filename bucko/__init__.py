@@ -43,7 +43,7 @@ def parse_ci_message(msg, compose_url):
     # Parse our "branch" JSON key and interpolate values into the
     # COMPOSE_URL environment variable (format string).
     (_, version, distro) = branch.split('-', 2)
-    (major, _) = version.split('.', 1)
+    major = int(float(version))
     distro = distro.upper()
     result = compose_url % {'branch': branch,
                             'major': major,
