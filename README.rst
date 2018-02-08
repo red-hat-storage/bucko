@@ -75,6 +75,25 @@ Bucko does the following actions:
    or a remote SSH server).
 4. Initiate a Brew build with this .repo file on the web server.
 
+Side note: what is a "variant"?
+-------------------------------
+
+A "variant" is a slight difference in the package list for a product.
+
+To use RHEL 7 as an example: "Server" is the main variant for RHEL 7,
+almost to the point that when you and I think of RHEL 7, we think of
+RHEL 7 Server. There is also "RHEL 7 Workstation", "RHEL 7 ComputeNode",
+etc. These are separate variants of the RHEL 7 product.
+
+A variant is a set of packages.
+
+The list of packages in a variant may overlap (they often do overlap).
+
+The set of package differs between variants. The versions of the
+packages are not different between variants.
+
+Only the package lists differ.
+
 Integration with Pungi
 ----------------------
 
