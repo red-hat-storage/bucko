@@ -89,7 +89,7 @@ A variant is a set of packages.
 
 The list of packages in a variant may overlap (they often do overlap).
 
-The set of package differs between variants. The versions of the
+The set of packages differs between variants. The versions of the
 packages are not different between variants.
 
 Only the package lists differ.
