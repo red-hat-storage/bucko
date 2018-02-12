@@ -94,6 +94,20 @@ packages are not different between variants.
 
 Only the package lists differ.
 
+Why scratch build?
+------------------
+
+One reason bucko does scratch builds instead of real builds is because
+it reduces confusion when it's time to ship.
+
+* Scratch-built container == maybe not fully GPG-signed
+* Real container build == must be GPG-signed with the GA key.
+
+(Internally there is some initial work in the Errata Tool and MetaXOR to
+automatically inspect RPM signatures within containers and ultimately
+prevent non-GA-signed content from shipping live. This is still a work
+in progress.)
+
 Integration with Pungi
 ----------------------
 
