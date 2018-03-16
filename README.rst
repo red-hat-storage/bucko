@@ -94,6 +94,8 @@ packages are not different between variants.
 
 Only the package lists differ.
 
+The current variants for the RHCEPH product are "Mon", "OSD", and "Tools".
+
 Why scratch build?
 ------------------
 
