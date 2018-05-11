@@ -151,8 +151,8 @@ Sample ``bucko.conf`` contents::
     [koji]
     hub = https://koji.fedoraproject.org/kojihub
     web = http://koji.fedoraproject.org/koji
-    scm = git://example.com/rpms/rhceph-rhel7-docker#origin/%(branch)s
-    target = %(branch)s-docker-candidate
+    scm = git://example.com/containers/rhceph-rhel7#origin/%(branch)s
+    target = %(branch)s-containers-candidate
     krbservice = brewhub
 
     [keys]
