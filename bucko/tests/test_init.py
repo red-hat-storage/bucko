@@ -4,7 +4,7 @@ import bucko
 try:
     from configparser import ConfigParser
 except ImportError:
-    import ConfigParser
+    from ConfigParser import ConfigParser
 
 TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
 FIXTURES_DIR = os.path.join(TESTS_DIR, 'fixtures')
@@ -48,7 +48,7 @@ class TestComposeUrlFromEnv(object):
 class TestGetPublisher(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.ConfigParser()
+        config = ConfigParser()
         config.add_section('publish')
         config.set('publish', 'push', 'file:///mypath')
         config.set('publish', 'http', 'http:///example.com/mypath')
@@ -64,7 +64,7 @@ class TestGetPublisher(object):
 class TestGetCompose(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.ConfigParser()
+        config = ConfigParser()
         config.add_section('keys')
         branch = 'myproduct-2.1-rhel-7'
         config.add_section(branch + '-base')
@@ -95,7 +95,7 @@ class FakeKojiBuilder(object):
 class TestBuildContainer(object):
     @pytest.fixture
     def config(self):
-        config = ConfigParser.ConfigParser()
+        config = ConfigParser()
         config.add_section('koji')
         config.set('koji', 'hub', 'dummyhub')
         config.set('koji', 'web', 'dummyweb')
