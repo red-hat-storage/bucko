@@ -59,8 +59,8 @@ class TestKojiBuilder(object):
     def test_build_container(self, monkeypatch):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
         k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
-        scm = 'git://example.com/rpms/rhceph-rhel7-docker#origin/ceph-2-rhel-7'
-        target = 'ceph-2-rhel-7-docker-candidate'
+        scm = 'git://example.com/containers/rhceph-rhel7#origin/ceph-2-rhel-7'
+        target = 'ceph-2-rhel-7-containers-candidate'
         result = k.build_container(scm, target, 'ceph-2-rhel-7', [])
         assert result == 1234
 
