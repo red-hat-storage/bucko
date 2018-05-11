@@ -125,6 +125,6 @@ class RepoCompose(productmd.compose.Compose):
                 config.set(name, 'gpgcheck', 1)
                 config.set(name, 'gpgkey', self.keys[bp.gpgkey])
 
-        with open(filename, 'wb') as configfile:
+        with open(filename, 'w') as configfile:
             config.write(configfile)
         return filename
