@@ -27,7 +27,8 @@ class KojiBuilder(object):
 
         :param str scm: dist-git SCM.
                         Eg. 'git://example.com/foo#origin/foo-rhel-7'
-        :param str target: Koji build target. Eg. 'foo-rhel-7-docker-candidate'
+        :param str target: Koji build target.
+                           Eg. 'foo-rhel-7-containers-candidate'
         :param str branch: dist-git branch. Eg. 'foo-rhel-7'
         :param list repos: URLs to Yum .repo files.
         :returns int: a Koji task ID
