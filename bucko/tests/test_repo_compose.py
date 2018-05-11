@@ -4,8 +4,10 @@ import productmd.compose
 import pytest
 try:
     from configparser import ConfigParser
+    from configparser import RawConfigParser
 except ImportError:
     import ConfigParser
+    from ConfigParser import RawConfigParser
 
 TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
 FIXTURES_DIR = os.path.join(TESTS_DIR, 'fixtures')
@@ -73,7 +75,7 @@ class TestRepoComposeYumRepo(object):
     def test_file_contents(self, repocompose):
         path = repocompose.write_yum_repo_file()
         # Verify the contents with ConfigParser
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(path)
         expected = ['MYPRODUCT-2.1-RHEL-7-MON',
                     'MYPRODUCT-2.1-RHEL-7-OSD',
@@ -85,14 +87,14 @@ class TestRepoComposeYumRepo(object):
         # No gpgkey means gpgcheck should be 0 in the .repo file.
         assert repocompose.info.base_product.gpgkey is None
         path = repocompose.write_yum_repo_file()
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(path)
         assert config.get('rhel-7', 'gpgcheck') == '0'
 
     def test_base_product_gpgkey(self, repocompose_bp_signed):
         # gpgkey is set, so it will be present in the .repo file.
         path = repocompose_bp_signed.write_yum_repo_file()
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(path)
         assert config.get('rhel-7', 'gpgcheck') == '1'
         assert config.get('rhel-7', 'gpgkey') == '/etc/RPM-GPG-KEY-f00d'
@@ -100,7 +102,7 @@ class TestRepoComposeYumRepo(object):
     def test_base_product_extras(self, repocompose_extras):
         # extras is set, so it will be present in the .repo file.
         path = repocompose_extras.write_yum_repo_file()
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         config.read(path)
         assert config.get('rhel-7-extras', 'gpgcheck') == '1'
         assert config.get('rhel-7-extras', 'gpgkey') == '/etc/RPM-GPG-KEY-f00d'

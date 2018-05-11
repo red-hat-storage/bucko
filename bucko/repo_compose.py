@@ -3,9 +3,9 @@ import posixpath
 import tempfile
 import productmd.compose
 try:
-    from configparser import ConfigParser
+    from configparser import RawConfigParser
 except ImportError:
-    import ConfigParser
+    from ConfigParser import RawConfigParser
 
 # Default set of GPG signing keys:
 GPG_KEYS = {
@@ -75,7 +75,7 @@ class RepoCompose(productmd.compose.Compose):
         """
         filename = '%s.repo' % self.info.compose.id
         filename = os.path.join(tempfile.mkdtemp(suffix='.compose'), filename)
-        config = ConfigParser.RawConfigParser()
+        config = RawConfigParser()
         try:
             variants = self.info.get_variants(arch=arch)
         except AttributeError:

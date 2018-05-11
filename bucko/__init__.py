@@ -8,10 +8,15 @@ from bucko.repo_compose import RepoCompose
 from bucko.publisher import Publisher
 from bucko.koji_builder import KojiBuilder
 try:
-    from configparser import ConfigParser
+    import configparser
+    ConfigParserError = configparser.Error
 except ImportError:
     import ConfigParser
-
+    ConfigParserError = ConfigParser.Error
+try:
+    from configparser import ConfigParser
+except ImportError:
+    from ConfigParser import ConfigParser
 
 __version__ = '1.0.0'
 
@@ -83,7 +88,7 @@ def compose_url_from_env():
 
 def config():
     """ Load a bucko configuration file and return a ConfigParser object. """
-    configp = ConfigParser.ConfigParser()
+    configp = ConfigParser()
     configp.read(['bucko.conf', os.path.expanduser('~/.bucko.conf')])
     return configp
 
@@ -99,7 +104,7 @@ def lookup(configp, section, option, fatal=True):
     """ Gracefully (or not) look up an option from a ConfigParser section. """
     try:
         return configp.get(section, option)
-    except ConfigParser.Error as e:
+    except ConfigParserError as e:
         if fatal:
             raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
 
