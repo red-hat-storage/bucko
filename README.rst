@@ -108,7 +108,7 @@ it reduces confusion when it's time to ship.
 (Internally there is some initial work in the Errata Tool and MetaXOR to
 automatically inspect RPM signatures within containers and ultimately
 prevent non-GA-signed content from shipping live. This is still a work
-in progress.)
+in progress. One bug to watch is https://bugzilla.redhat.com/1590550 .)
 
 Integration with Pungi
 ----------------------
