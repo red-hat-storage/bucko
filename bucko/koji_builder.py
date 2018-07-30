@@ -31,6 +31,8 @@ class KojiBuilder(object):
                            Eg. 'foo-rhel-7-containers-candidate'
         :param str branch: dist-git branch. Eg. 'foo-rhel-7'
         :param list repos: URLs to Yum .repo files.
+        :param bool scratch: Whether to scratch-build this container
+                             (default: True).
         :returns int: a Koji task ID
         """
         self.ensure_logged_in()
