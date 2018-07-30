@@ -11,8 +11,9 @@ class KojiBuilder(object):
     def __init__(self, hub, web, krbservice):
         self.hub = hub
         self.web = web
-        opts = {'krbservice': krbservice}
-        self.session = koji.ClientSession(hub, opts)
+        # Note: krbV authentication requires str values (not unicode) here:
+        opts = {'krbservice': str(krbservice)}
+        self.session = koji.ClientSession(str(hub), opts)
 
     def ensure_logged_in(self):
         """ Log in if we are not already logged in """
