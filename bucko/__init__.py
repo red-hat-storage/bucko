@@ -164,9 +164,19 @@ def build_container(repo_url, branch, configp):
                                    repos=[repo_url])
     # Show information to the console.
     koji.watch_task(task_id)
+
     # Return information about this build.
-    return {'koji_task': task_id,
-            'repositories': koji.get_repositories(task_id)}
+    result = {'koji_task': task_id}
+
+    # Collapse "repositories" to "repository" if there was only one for
+    # simplicity.
+    repositories = koji.get_repositories(task_id)
+    if len(repositories) == 1:
+        result['repository'] = repositories[0]
+    else:
+        result['repositories'] = repositories
+
+    return result
 
 
 def parse_args():
