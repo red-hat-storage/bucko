@@ -110,6 +110,20 @@ automatically inspect RPM signatures within containers and ultimately
 prevent non-GA-signed content from shipping live. This is still a work
 in progress. One bug to watch is https://bugzilla.redhat.com/1590550 .)
 
+Multi-arch, or lack thereof
+---------------------------
+
+By default, OSBS will build for all arches defined on Koji's build tag
+associated with Koji's build target. OSBS's docs explain more about this at
+https://osbs.readthedocs.io/en/latest/users.html?highlight=container.yaml#image-configuration
+
+This means that when your Koji build target's build tag has ``Arches: ppc64le
+x86_64`` set, OSBS will try to build containers for both of those arches.
+
+By default, Bucko overrides this behavior and builds the container for x86_64
+only. There is no support for altering bucko's behavior using the configuration
+file at this time, because I don't need this currently.
+
 Integration with Pungi
 ----------------------
 

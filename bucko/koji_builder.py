@@ -22,7 +22,8 @@ class KojiBuilder(object):
             except koji.krbV.Krb5Error as e:
                 raise RuntimeError('Authentication failed: %s' % e.args[1])
 
-    def build_container(self, scm, target, branch, repos, scratch=True):
+    def build_container(self, scm, target, branch, repos, scratch=True,
+                        arch_override=['x86_64']):
         """ Build a container in Koji
 
         :param str scm: dist-git SCM.
@@ -33,6 +34,11 @@ class KojiBuilder(object):
         :param list repos: URLs to Yum .repo files.
         :param bool scratch: Whether to scratch-build this container
                              (default: True).
+        :param list arch_override: list of arches to build. Default is
+                                   ['x86_64']. This is only
+                                   relevant when "scratch" is True. An empty
+                                   list means we will not tell Koji to
+                                   override any arches.
         :returns int: a Koji task ID
         """
         self.ensure_logged_in()
@@ -50,6 +56,9 @@ class KojiBuilder(object):
         config = {'scratch': scratch,
                   'yum_repourls': repos,
                   'git_branch': branch}
+
+        if scratch and arch_override:
+            config['arch_override'] = arch_override
 
         return self.session.buildContainer(scm, target, config, priority=None)
 
