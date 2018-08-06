@@ -124,7 +124,7 @@ def write_props_file(**kwargs):
         props_path = os.path.join(os.environ['WORKSPACE'], 'osbs.props')
         with open(props_path, 'w') as props:
             for key, value in kwargs.iteritems():
-                props.write(key.upper() + '=' + value + "\n")
+                props.write(key.upper() + '=' + str(value) + "\n")
 
 
 def get_compose(compose_url, configp):
