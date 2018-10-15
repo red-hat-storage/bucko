@@ -161,7 +161,8 @@ def build_container(repo_url, branch, configp):
     task_id = koji.build_container(scm=kconf['scm'],
                                    target=kconf['target'],
                                    branch=branch,
-                                   repos=[repo_url])
+                                   repos=[repo_url],
+                                   scratch=True)
     # Show information to the console.
     koji.watch_task(task_id)
 
