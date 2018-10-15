@@ -7,6 +7,7 @@ from .log import log
 from bucko.repo_compose import RepoCompose
 from bucko.publisher import Publisher
 from bucko.koji_builder import KojiBuilder
+from bucko.registry import Registry
 try:
     import configparser
     ConfigParserError = configparser.Error
@@ -135,7 +136,8 @@ def get_compose(compose_url, configp):
     bp_url = lookup(configp, section, 'url')
     bp_gpgkey = lookup(configp, section, 'gpgkey', fatal=False)
     bp_extras = lookup(configp, section, 'extras', fatal=False)
-    compose.set_base_product(bp_url, bp_gpgkey, bp_extras)
+    bp_parent_image = lookup(configp, section, 'parent_image', fatal=False)
+    compose.set_base_product(bp_url, bp_gpgkey, bp_extras, bp_parent_image)
     return compose
 
 
@@ -151,18 +153,23 @@ def get_branch(compose):
     return '%s-%s-rhel-7' % (name, version)
 
 
-def build_container(repo_url, branch, configp):
+def build_container(repo_url, branch, parent_image, configp):
     """ Build a container with Koji. """
     kconf = dict(configp.items('koji', vars={'branch': branch}))
     koji = KojiBuilder(hub=kconf['hub'],
                        web=kconf['web'],
                        krbservice=kconf['krbservice'])
+    if parent_image:
+        registry_url = configp['registry']['url']
+        registry = Registry(registry_url)
+        parent = registry.build(parent_image)  # bucko.build.Build
     log.info('Building container at %s' % kconf['hub'])
     task_id = koji.build_container(scm=kconf['scm'],
                                    target=kconf['target'],
                                    branch=branch,
                                    repos=[repo_url],
-                                   scratch=True)
+                                   scratch=True,
+                                   koji_parent_build=str(parent))
     # Show information to the console.
     koji.watch_task(task_id)
 
@@ -218,7 +225,8 @@ def main():
     branch = get_branch(c)
 
     # Do a Koji build
-    metadata = build_container(repo_url, branch, configp)
+    metadata = build_container(repo_url, branch,
+                               c.info.base_product.parent_image, configp)
 
     # Store and publish our information about this build
     metadata['compose_url'] = compose_url

@@ -23,7 +23,8 @@ class KojiBuilder(object):
             except koji.krbV.Krb5Error as e:
                 raise RuntimeError('Authentication failed: %s' % e.args[1])
 
-    def build_container(self, scm, target, branch, repos, scratch=True):
+    def build_container(self, scm, target, branch, repos, scratch=True,
+                        koji_parent_build=None):
         """ Build a container in Koji
 
         :param str scm: dist-git SCM.
@@ -34,6 +35,10 @@ class KojiBuilder(object):
         :param list repos: URLs to Yum .repo files.
         :param bool scratch: Whether to scratch-build this container
                              (default: True).
+        :param str koji_parent_build: Override the "FROM" line in the
+                                      Dockerfile with a custom base image.
+                                      Eg. 'rhel-server-container-7.5-107'.
+                                      (default: no overriding).
         :returns int: a Koji task ID
         """
         self.ensure_logged_in()
@@ -51,6 +56,8 @@ class KojiBuilder(object):
         config = {'scratch': scratch,
                   'yum_repourls': repos,
                   'git_branch': branch}
+        if koji_parent_build:
+            config['koji_parent_build'] = koji_parent_build
 
         return self.session.buildContainer(scm, target, config, priority=None)
 

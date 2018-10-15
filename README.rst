@@ -159,6 +159,10 @@ Sample ``bucko.conf`` contents::
     # List any extra keys here. For example, an internal signing key:
     f000000d = http://internal.example.com/keys/RPM-GPG-KEY-internal-custom
 
+    [registry]
+    # container registry with tags for parent images
+    url = http://brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888
+
     [ceph-3.0-rhel-7-base]
     # HTTP URL to RHEL 7 Server content
     url = http://example.com/content/dist/rhel/server/7/7Server/$basearch/os/
@@ -173,3 +177,8 @@ compose's metadata. For example, bucko will choose a ``branch`` value of
 
 The ``[*-base]`` sections are unique per branch. Please define one for each
 branch you expect to use.
+
+The ``parent_image`` setting in each branch is optional. Define this in order
+to override the parent image. If this is not set, Bucko/OSBS will use the
+"FROM" line in the Dockerfile. This ``parent_image`` setting is useful if you
+want to build a container dist-git branch against a yet-unreleased base image.
