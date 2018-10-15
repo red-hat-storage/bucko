@@ -161,7 +161,7 @@ Sample ``bucko.conf`` contents::
 
     [registry]
     # container registry with tags for parent images
-    url = http://brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888
+    url = http://pulp-docker01.example.com:8888
 
     [ceph-3.0-rhel-7-base]
     # HTTP URL to RHEL 7 Server content
