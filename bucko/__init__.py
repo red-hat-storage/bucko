@@ -192,7 +192,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--compose', required=False,
                         default=compose_url_from_env(),
-                        help='HTTP(S) URL to a Distill/Pungi compose.')
+                        help='HTTP(S) URL to a product Pungi compose.')
     return parser.parse_args()
 
 
