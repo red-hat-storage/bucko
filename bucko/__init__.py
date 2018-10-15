@@ -160,7 +160,7 @@ def build_container(repo_url, branch, parent_image, configp):
                        web=kconf['web'],
                        krbservice=kconf['krbservice'])
     if parent_image:
-        registry_url = configp['registry']['url']
+        registry_url = lookup(configp, 'registry', 'url')
         registry = Registry(registry_url)
         parent = registry.build(parent_image)  # bucko.build.Build
     log.info('Building container at %s' % kconf['hub'])
