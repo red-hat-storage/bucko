@@ -10,7 +10,14 @@ Methods to interact with our container registry API
 
 
 class Registry(object):
-    """ Simple container registry client that query build NVRs. """
+    """
+    Simple container registry client that query build NVRs.
+
+    Note: This only supports a registry implementation that allows direct,
+    anonymous HTTP(s) access (ie Pulp). Eventually we will need to add support
+    for obtaining a read-only JWT in order to access our desired registry
+    server API endpoints.
+    """
 
     def __init__(self, baseurl):
         self.baseurl = baseurl
