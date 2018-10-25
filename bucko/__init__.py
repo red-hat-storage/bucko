@@ -170,7 +170,7 @@ def build_container(repo_url, branch, parent_image, configp):
                                    branch=branch,
                                    repos=[repo_url],
                                    scratch=True,
-                                   koji_parent_build=str(parent))
+                                   koji_parent_build=parent)
     # Show information to the console.
     koji.watch_task(task_id)
 

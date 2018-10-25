@@ -57,7 +57,7 @@ class KojiBuilder(object):
                   'yum_repourls': repos,
                   'git_branch': branch}
         if koji_parent_build:
-            config['koji_parent_build'] = koji_parent_build
+            config['koji_parent_build'] = str(koji_parent_build)
 
         return self.session.buildContainer(scm, target, config, priority=None)
 
