@@ -159,6 +159,7 @@ def build_container(repo_url, branch, parent_image, configp):
     koji = KojiBuilder(hub=kconf['hub'],
                        web=kconf['web'],
                        krbservice=kconf['krbservice'])
+    parent = None
     if parent_image:
         registry_url = lookup(configp, 'registry', 'url')
         registry = Registry(registry_url)
