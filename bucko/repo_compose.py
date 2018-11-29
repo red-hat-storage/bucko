@@ -13,7 +13,7 @@ GPG_KEYS = {
     # Red Hat GA signing key
     'fd431d51': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release',
     # Red Hat Beta signing key
-    '897da07a': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta',
+    'f21541eb': 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta',
 }
 
 
