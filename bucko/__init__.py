@@ -4,20 +4,11 @@ import tempfile
 import json
 import os
 from .log import log
+from bucko import config
 from bucko.repo_compose import RepoCompose
 from bucko.publisher import Publisher
 from bucko.koji_builder import KojiBuilder
 from bucko.registry import Registry
-try:
-    import configparser
-    ConfigParserError = configparser.Error
-except ImportError:
-    import ConfigParser
-    ConfigParserError = ConfigParser.Error
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from ConfigParser import ConfigParser
 
 __version__ = '1.0.0'
 
@@ -87,27 +78,11 @@ def compose_url_from_env():
     return parse_ci_message(msg, compose_url)
 
 
-def config():
-    """ Load a bucko configuration file and return a ConfigParser object. """
-    configp = ConfigParser()
-    configp.read(['bucko.conf', os.path.expanduser('~/.bucko.conf')])
-    return configp
-
-
 def get_publisher(configp):
     """ Look up the push url and http url from a ConfigParser object. """
-    push_url = lookup(configp, 'publish', 'push')
-    http_url = lookup(configp, 'publish', 'http')
+    push_url = config.lookup(configp, 'publish', 'push')
+    http_url = config.lookup(configp, 'publish', 'http')
     return Publisher(push_url, http_url)
-
-
-def lookup(configp, section, option, fatal=True):
-    """ Gracefully (or not) look up an option from a ConfigParser section. """
-    try:
-        return configp.get(section, option)
-    except ConfigParserError as e:
-        if fatal:
-            raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
 
 
 def write_metadata_file(filename, **kwargs):
@@ -133,10 +108,10 @@ def get_compose(compose_url, configp):
     keys = dict(configp.items('keys'))
     compose = RepoCompose(compose_url, keys)
     section = get_branch(compose) + '-base'  # eg "ceph-2-rhel-7-base"
-    bp_url = lookup(configp, section, 'url')
-    bp_gpgkey = lookup(configp, section, 'gpgkey', fatal=False)
-    bp_extras = lookup(configp, section, 'extras', fatal=False)
-    bp_parent_image = lookup(configp, section, 'parent_image', fatal=False)
+    bp_url = config.lookup(configp, section, 'url')
+    bp_gpgkey = config.lookup(configp, section, 'gpgkey', fatal=False)
+    bp_extras = config.lookup(configp, section, 'extras', fatal=False)
+    bp_parent_image = config.lookup(configp, section, 'parent_image', fatal=False)
     compose.set_base_product(bp_url, bp_gpgkey, bp_extras, bp_parent_image)
     return compose
 
@@ -161,7 +136,7 @@ def build_container(repo_url, branch, parent_image, configp):
                        krbservice=kconf['krbservice'])
     parent = None
     if parent_image:
-        registry_url = lookup(configp, 'registry', 'url')
+        registry_url = config.lookup(configp, 'registry', 'url')
         registry = Registry(registry_url)
         parent = registry.build(parent_image)  # bucko.build.Build
     log.info('Building container at %s' % kconf['hub'])
@@ -207,7 +182,7 @@ def main():
     compose_url = args.compose
 
     # Load config file
-    configp = config()
+    configp = config.load()
 
     # Load compose
     c = get_compose(compose_url, configp)
