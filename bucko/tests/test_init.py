@@ -51,14 +51,14 @@ class TestGetPublisher(object):
         config = ConfigParser()
         config.add_section('publish')
         config.set('publish', 'push', 'file:///mypath')
-        config.set('publish', 'http', 'http:///example.com/mypath')
+        config.set('publish', 'http', 'http://example.com/mypath')
         return config
 
     def test_get_publisher(self, config):
         p = bucko.get_publisher(config)
         assert isinstance(p, bucko.Publisher)
         assert p.push_url == 'file:///mypath'
-        assert p.http_url == 'http:///example.com/mypath'
+        assert p.http_url == 'http://example.com/mypath'
 
 
 class TestGetCompose(object):
@@ -68,13 +68,13 @@ class TestGetCompose(object):
         config.add_section('keys')
         branch = 'myproduct-2.1-rhel-7'
         config.add_section(branch + '-base')
-        config.set(branch + '-base', 'url', 'http:///example.com/baseproduct')
+        config.set(branch + '-base', 'url', 'http://example.com/baseproduct')
         return config
 
     def test_get_compose(self, config):
         c = bucko.get_compose(FIXTURES_DIR, config)
         assert isinstance(c, bucko.RepoCompose)
-        assert c.info.base_product.url == 'http:///example.com/baseproduct'
+        assert c.info.base_product.url == 'http://example.com/baseproduct'
 
 
 class FakeKojiBuilder(object):
@@ -106,7 +106,7 @@ class TestBuildContainer(object):
 
     def test_build_container(self, config, monkeypatch):
         monkeypatch.setattr('bucko.KojiBuilder', FakeKojiBuilder)
-        repo_url = 'http:///example.com/example.repo'
+        repo_url = 'http://example.com/example.repo'
         branch = 'foo-3.0-rhel-7'
         results = bucko.build_container(repo_url, branch, config)
         assert results['koji_task'] == 1234
