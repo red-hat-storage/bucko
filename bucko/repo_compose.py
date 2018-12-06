@@ -83,6 +83,8 @@ class RepoCompose(productmd.compose.Compose):
             uid = variant.uid  # eg. "MON"
             name = '%s-%s' % (release_id, uid)  # eg. "RHCEPH-3.1-RHEL-7-MON"
             url = self.get_variant_url(variant, arch)
+            # XXX Terrible hack ahead:
+            url = url.replace('x86_64', '$basearch')
             gpgkey = self.get_variant_gpg_key(variant, arch)
             config.add_section(name)
             config.set(name, 'name', self.info.compose.id + ' ' + uid)
