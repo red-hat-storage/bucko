@@ -78,11 +78,11 @@ class RepoCompose(productmd.compose.Compose):
                 if arch in v.arches:
                     variants.append(v)
 
-        for v in variants:
-            uid = v.uid  # eg. "MON"
+        for variant in variants:
+            uid = variant.uid  # eg. "MON"
             name = '%s-%s' % (self.info.get_release_id(), uid)
-            url = self.get_variant_url(v, arch)
-            gpgkey = self.get_variant_gpg_key(v, arch)
+            url = self.get_variant_url(variant, arch)
+            gpgkey = self.get_variant_gpg_key(variant, arch)
             config.add_section(name)
             config.set(name, 'name', self.info.compose.id + ' ' + uid)
             config.set(name, 'baseurl', url)
