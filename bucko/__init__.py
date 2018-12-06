@@ -107,12 +107,6 @@ def get_compose(compose_url, configp):
     """ Construct a RepoCompose object according to our ConfigParser. """
     keys = dict(configp.items('keys'))
     compose = RepoCompose(compose_url, keys)
-    section = get_branch(compose) + '-base'  # eg "ceph-2-rhel-7-base"
-    bp_url = config.lookup(configp, section, 'url')
-    bp_gpgkey = config.lookup(configp, section, 'gpgkey', fatal=False)
-    bp_extras = config.lookup(configp, section, 'extras', fatal=False)
-    bp_parent_image = config.lookup(configp, section, 'parent_image', fatal=False)
-    compose.set_base_product(bp_url, bp_gpgkey, bp_extras, bp_parent_image)
     return compose
 
 
@@ -128,7 +122,7 @@ def get_branch(compose):
     return '%s-%s-rhel-7' % (name, version)
 
 
-def build_container(repo_url, branch, parent_image, configp):
+def build_container(repo_urls, branch, parent_image, configp):
     """ Build a container with Koji. """
     kconf = dict(configp.items('koji', vars={'branch': branch}))
     koji = KojiBuilder(hub=kconf['hub'],
@@ -143,7 +137,7 @@ def build_container(repo_url, branch, parent_image, configp):
     task_id = koji.build_container(scm=kconf['scm'],
                                    target=kconf['target'],
                                    branch=branch,
-                                   repos=[repo_url],
+                                   repos=repo_urls,
                                    scratch=True,
                                    koji_parent_build=parent)
     # Show information to the console.
@@ -200,9 +194,18 @@ def main():
     # Determine scm and brew target branch name
     branch = get_branch(c)
 
+    # Determine other settings for this branch
+    section = '%s-base' % branch  # eg "ceph-2-rhel-7-base"
+    parent_image = config.lookup(configp, section, 'parent_image', fatal=False)
+    if parent_image:
+        log.info('parent_image configured: %s' % parent_image)
+    repo_urls = config.get_repo_urls(configp, section)
+    for url in repo_urls:
+        log.info('Additional .repo configured: %s' % url)
+    repo_urls.add(repo_url)
+
     # Do a Koji build
-    metadata = build_container(repo_url, branch,
-                               c.info.base_product.parent_image, configp)
+    metadata = build_container(repo_urls, branch, parent_image, configp)
 
     # Store and publish our information about this build
     metadata['compose_url'] = compose_url

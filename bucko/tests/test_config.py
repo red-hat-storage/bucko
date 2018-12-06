@@ -45,3 +45,11 @@ def test_lookup_fatal(simple_configp):
 def test_lookup_nonfatal(simple_configp):
     result = config.lookup(simple_configp, 'testsection', 'baz', fatal=False)
     assert result is None
+
+
+def test_get_repo_urls(configp):
+    section = 'ceph-2-rhel-7-base'
+    result = config.get_repo_urls(configp, section)
+    expected = set(['http://example.com/repo1.repo',
+                    'http://example.com/repo2.repo'])
+    assert result == expected

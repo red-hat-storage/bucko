@@ -54,7 +54,7 @@ class KojiBuilder(object):
             raise RuntimeError(msg)
 
         config = {'scratch': scratch,
-                  'yum_repourls': repos,
+                  'yum_repourls': list(repos),
                   'git_branch': branch}
         if koji_parent_build:
             config['koji_parent_build'] = str(koji_parent_build)

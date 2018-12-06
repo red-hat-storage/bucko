@@ -25,3 +25,22 @@ def lookup(configp, section, option, fatal=True):
     except ConfigParserError as e:
         if fatal:
             raise SystemExit('Problem parsing .bucko.conf: %s' % e.message)
+
+
+def get_repo_urls(configp, section):
+    """
+    Return a set of URLs for this configparser section.
+
+    :param str section: eg. 'ceph-3.0-rhel-7-base'
+    :returns: set of URLs for Yum .repo files
+    """
+    urls = set()
+    items = configp.items(section)
+    for key, url in items:
+        if not key.startswith('repo'):
+            continue
+        # Sanity-check that this value looks like a .repo file.
+        if not url.endswith('.repo'):
+            raise RuntimeError('%s does not look like a .repo file' % url)
+        urls.add(url)
+    return urls

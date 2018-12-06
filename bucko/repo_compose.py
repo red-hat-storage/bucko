@@ -25,24 +25,9 @@ class RepoCompose(productmd.compose.Compose):
         # Sanity-check that this is a layered product compose.
         if not self.info.release.is_layered:
             raise RuntimeError('%s must be layered' % self.info.release.short)
-        # Yum repository settings for our base_product:
-        self.info.base_product.url = None
-        self.info.base_product.gpgkey = None
-        self.info.base_product.extras = None
-        # OSBS parent image (eg "rhel7:7.5-ondeck"):
-        self.info.base_product.parent_image = None
         # Dict of possible GPG signing keys:
         self.keys = GPG_KEYS.copy()
         self.keys.update(keys)
-
-    def set_base_product(self, url, gpgkey=None, extras=None,
-                         parent_image=None):
-        # Yum repository settings for our base_product:
-        self.info.base_product.url = url
-        self.info.base_product.gpgkey = gpgkey
-        self.info.base_product.extras = extras
-        # OSBS parent image (eg "rhel7:7.5-ondeck"):
-        self.info.base_product.parent_image = parent_image
 
     def get_variant_url(self, v, arch):
         return posixpath.join(self.compose_path, v.paths.repository[arch])
@@ -105,30 +90,6 @@ class RepoCompose(productmd.compose.Compose):
             if gpgkey is not None:
                 config.set(name, 'gpgcheck', 1)
                 config.set(name, 'gpgkey', gpgkey)
-
-        # Also include our base product repository.
-        bp = self.info.base_product
-        name = bp.short.lower() + '-' + bp.version
-        config.add_section(name)
-        config.set(name, 'name', bp.name + ' ' + bp.version)
-        config.set(name, 'baseurl', bp.url)
-        config.set(name, 'enabled', 1)
-        config.set(name, 'gpgcheck', 0)
-        if bp.gpgkey is not None:
-            config.set(name, 'gpgcheck', 1)
-            config.set(name, 'gpgkey', self.keys[bp.gpgkey])
-
-        # And our base product "extras" repository, if configured.
-        if bp.extras is not None:
-            name = bp.short.lower() + '-' + bp.version + '-extras'
-            config.add_section(name)
-            config.set(name, 'name', bp.name + ' ' + bp.version + ' extras')
-            config.set(name, 'baseurl', bp.extras)
-            config.set(name, 'enabled', 1)
-            config.set(name, 'gpgcheck', 0)
-            if bp.gpgkey is not None:
-                config.set(name, 'gpgcheck', 1)
-                config.set(name, 'gpgkey', self.keys[bp.gpgkey])
 
         with open(filename, 'w') as configfile:
             config.write(configfile)

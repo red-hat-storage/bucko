@@ -164,12 +164,9 @@ Sample ``bucko.conf`` contents::
     url = http://pulp-docker01.example.com:8888
 
     [ceph-3.0-rhel-7-base]
-    # HTTP URL to RHEL 7 Server content
-    url = http://example.com/content/dist/rhel/server/7/7Server/$basearch/os/
-    # This "extras" URL is optional. Add it if you need an "extras" repo
-    # defined:
-    extras = http://example.com/content/dist/rhel/server/7/7Server/$basearch/extras/os/
-    gpgkey = fd431d51
+    # HTTP URLs to RHEL 7 Server and RHEL 7 Extras Yum .repo files
+    repo1 = http://example.com/rhel7.repo
+    repo2 = http://example.com/rhel7-extras.repo
 
 Bucko will interpolate the ``%(branch)s`` format string according to the
 compose's metadata. For example, bucko will choose a ``branch`` value of
