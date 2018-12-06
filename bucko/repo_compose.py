@@ -74,9 +74,9 @@ class RepoCompose(productmd.compose.Compose):
             # https://github.com/release-engineering/productmd/issues/65
             # Workaround: filter the variants manually
             variants = []
-            for v in self.info.get_variants():
-                if arch in v.arches:
-                    variants.append(v)
+            for variant in self.info.get_variants():
+                if arch in variant.arches:
+                    variants.append(variant)
 
         for variant in variants:
             uid = variant.uid  # eg. "MON"
