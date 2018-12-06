@@ -78,9 +78,10 @@ class RepoCompose(productmd.compose.Compose):
                 if arch in variant.arches:
                     variants.append(variant)
 
+        release_id = self.info.get_release_id()  # eg. "RHCEPH-3.1-RHEL-7"
         for variant in variants:
             uid = variant.uid  # eg. "MON"
-            name = '%s-%s' % (self.info.get_release_id(), uid)
+            name = '%s-%s' % (release_id, uid)  # eg. "RHCEPH-3.1-RHEL-7-MON"
             url = self.get_variant_url(variant, arch)
             gpgkey = self.get_variant_gpg_key(variant, arch)
             config.add_section(name)
