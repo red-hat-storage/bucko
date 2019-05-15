@@ -84,6 +84,11 @@ class TestGetBranch(object):
         branch = bucko.get_branch(compose)
         assert branch == 'myproduct-2.1-rhel-7'
 
+    def test_get_branch_rhel_8(self, compose):
+        compose.info.base_product.version = '8'
+        branch = bucko.get_branch(compose)
+        assert branch == 'myproduct-2.1-rhel-8'
+
 
 class FakeKojiBuilder(object):
     """ Dummy KojiBuilder module """
