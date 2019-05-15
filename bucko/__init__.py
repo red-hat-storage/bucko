@@ -111,7 +111,13 @@ def get_compose(compose_url, configp):
 
 
 def get_branch(compose):
-    """ Return a dist-git branch name for this compose. """
+    """
+    Return a dist-git branch name for this compose.
+
+    Examples:
+      "ceph-2-rhel-7"
+      "ceph-3.2-rhel-7"
+    """
     name = compose.info.release.short.lower()
     if name == 'rhceph':
         name = 'ceph'
