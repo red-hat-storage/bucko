@@ -111,7 +111,14 @@ def get_compose(compose_url, configp):
 
 
 def get_branch(compose):
-    """ Return a dist-git branch name for this compose. """
+    """
+    Return a dist-git branch name for this compose.
+
+    Examples:
+      "ceph-2-rhel-7"
+      "ceph-3.2-rhel-7"
+      "ceph-4.0-rhel-8"
+    """
     name = compose.info.release.short.lower()
     if name == 'rhceph':
         name = 'ceph'
@@ -119,7 +126,9 @@ def get_branch(compose):
     if name == 'ceph' and version.startswith('2'):
         # special-case ceph 2.y branch names
         version = 2
-    return '%s-%s-rhel-7' % (name, version)
+    bp_short = compose.info.base_product.short.lower()  # "rhel"
+    bp_version = compose.info.base_product.version  # "7" or "8"
+    return '%s-%s-%s-%s' % (name, version, bp_short, bp_version)
 
 
 def build_container(repo_urls, branch, parent_image, configp):

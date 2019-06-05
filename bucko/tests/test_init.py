@@ -1,4 +1,5 @@
 import os
+import productmd
 import pytest
 import bucko
 try:
@@ -71,6 +72,22 @@ class TestGetCompose(object):
     def test_get_compose(self, config):
         c = bucko.get_compose(FIXTURES_DIR, config)
         assert isinstance(c, bucko.RepoCompose)
+
+
+class TestGetBranch(object):
+    @pytest.fixture
+    def compose(self):
+        compose_obj = productmd.compose.Compose(FIXTURES_DIR)
+        return compose_obj
+
+    def test_get_branch_basic(self, compose):
+        branch = bucko.get_branch(compose)
+        assert branch == 'myproduct-2.1-rhel-7'
+
+    def test_get_branch_rhel_8(self, compose):
+        compose.info.base_product.version = '8'
+        branch = bucko.get_branch(compose)
+        assert branch == 'myproduct-2.1-rhel-8'
 
 
 class FakeKojiBuilder(object):
