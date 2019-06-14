@@ -96,6 +96,49 @@ Only the package lists differ.
 
 The current variants for the RHCEPH product are "Mon", "OSD", and "Tools".
 
+Why build containers from product composes?
+-------------------------------------------
+
+Why would you want to build a container from a product compose? In other
+words, why do we use bucko instead of something else?
+
+The reason we use our product composes is that we want to closely match the
+content that we are going to publish to Pulp (Red Hat's CDN). We we want our
+containers to be completely buildable using only the RPMs we publish to the
+CDN. That is important because `Freshmaker <https://pagure.io/freshmaker>`_
+uses the contents of our CDN repositories when it rebuilds containers for base
+image CVEs.
+
+In Ceph, we have several binary RPMs (subpackages) that we end up building in
+Koji. We only ship and support a subset of those RPMs as part of the product
+for customers. We use Pungi's comps.xml file to carefully include only the
+exact binaries we support in the product. If we used some other Yum
+repositor(ies) to get binary RPMs into our containers, we could end up
+installing RPMs inside our container that are not also available in Pulp (ie.
+the CDN). At that point Freshmaker will fail to rebuild our images for base
+image CVEs, because it does not know where to get all our GA content.
+
+OSBS supports `a couple different ways
+<https://osbs.readthedocs.io/en/latest/users.html#yum-repositories>`_ to
+expose RPMs (Yum repositories) for installation inside a container:
+
+A. Every OSBS container build uses a Koji *target*, and each target has a
+   buildroot. Koji generates a Yum repository for all the RPMs in a buildroot.
+   OSBS exposes this buildroot repository to the container build process.
+   This is one of the oldest mechanisms for getting RPMs into your container.
+   It lacks features, like the ability to use any signed packages.
+
+B. OSBS also interacts with `ODCS <https://pagure.io/odcs>`_, a separate
+   service that runs Pungi on demand to generate signed Yum repositories. The
+   OSBS team recommends this as the preferred way to get RPM repositories.
+   ODCS could very well meet our needs in the future if we could ever satisfy
+   the problem explained above regarding shipping all our builds on the CDN
+   for Freshmaker. This is a future area of research.
+
+C. OSBS allows users to inject arbitrary Yum repository definitions during the
+   build process. rpkg exposes this as a ``--repo-url`` CLI parameter.
+   bucko uses this approach when it calls Koji's ``buildContainer`` RPC.
+
 Why scratch build?
 ------------------
 
