@@ -7,6 +7,13 @@ import os
 from paramiko import SSHClient
 import shutil
 
+"""
+Publish files to a "push URL", and retrieve them via an "HTTP URL".
+
+The "push URL" can be a file:// URL for local testing or an sftp:// URL for
+publishing to a remote web server.
+"""
+
 
 class Publisher(object):
     def __init__(self, push_url, http_url):
