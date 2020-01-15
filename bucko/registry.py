@@ -42,7 +42,7 @@ class Registry(object):
         """
         Return the config information for this image.
 
-        :param str repository: eg "rhel7"
+        :param str repository: repository we want to query eg. "rhel7"
         :param str reference: tag name in the repository, "7.5-ondeck"
         """
         manifest = self.manifest(repository, reference)
