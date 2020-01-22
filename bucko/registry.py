@@ -13,19 +13,24 @@ class Registry(object):
     """
     Simple container registry client that query build NVRs.
 
-    Note: This only supports a registry implementation that allows direct,
-    anonymous HTTP(s) access (ie Pulp). Eventually we will need to add support
-    for obtaining a read-only JWT in order to access our desired registry
-    server API endpoints.
+    This class will obtain a read-only JWT in order to access our desired
+    registry server API endpoints.
+
+    Note, in Red Hat's registry-proxy implementation, a 401 error for a
+    repository could indicate that the repository does not exist (ie, a 404).
     """
 
     def __init__(self, baseurl):
-        self.baseurl = baseurl
+        if baseurl.endswith('/v2'):
+            self.baseurl = baseurl
+        else:
+            self.baseurl = posixpath.join(baseurl, 'v2')
         self.session = requests.Session()
         headers = {
             'Accept': 'application/vnd.docker.distribution.manifest.v2+json'
         }
         self.session.headers.update(headers)
+        self.tokens = {}
 
     def blob(self, repository, digest):
         """
@@ -34,8 +39,8 @@ class Registry(object):
         :param str repository: eg "rhel7"
         :param str blob: digest to query, eg "sha256:123abcd..."
         """
-        url = 'v2/%s/blobs/%s' % (repository, digest)
-        r = self._get(url)
+        endpoint = 'blobs/%s' % digest
+        r = self._get(repository, endpoint)
         return r.json()
 
     def config(self, repository, reference):
@@ -50,15 +55,53 @@ class Registry(object):
         config = self.blob(repository, manifest_digest)
         return config
 
-    def _get(self, path):
+    def find_realm_from_header(self, response):
+        """
+        Parse the headers of this response for the realm URL.
+
+        :param Reponse response: requests.Response object
+        :returns: realm URL
+        """
+        auth_header = response.headers['WWW-Authenticate']
+        parts = auth_header.split(' ')
+        if parts[0] != 'Bearer':
+            raise ValueError('WWW-Authenticate: %s' % auth_header)
+        for part in parts:
+            if part.startswith('realm='):
+                realm = part[6:].strip('"')
+                return realm
+
+    def store_token(self, realm, repository):
+        """
+        Get and store a token for this repo
+        """
+        auth_url = '%s?scope=repository:%s:pull' % (realm, repository)
+        r = self.session.get(auth_url)
+        r.raise_for_status()
+        data = r.json()
+        token = data['token']
+        self.tokens[repository] = token
+        return token
+
+    def _get(self, repository, endpoint):
         """
         Get a docker distribution API endpoint URL.
 
-        :param str path: API endpoint path to query, eg "v2/_catalog"
+        :param str repository: repository we want to query eg. "rhel7"
+        :param str path: API endpoint for this repository, eg.
+                         "manifests/7.5-ondeck"
         :returns: Response object
         """
-        url = posixpath.join(self.baseurl, path)
-        r = self.session.get(url)
+        url = posixpath.join(self.baseurl, repository, endpoint)
+        token = self.tokens.get(repository)
+        if not token:
+            r = self.session.get(url)
+            if r.status_code == 401:
+                realm = self.find_realm_from_header(r)
+                self.store_token(realm, repository)
+                return self._get(repository, endpoint)
+        headers = {'Authorization': 'Bearer %s' % token}
+        r = self.session.get(url, headers=headers)
         r.raise_for_status()
         return r
 
@@ -85,6 +128,6 @@ class Registry(object):
         :param str repository: repository to query, eg "rhel7"
         :param str reference: tag name in the repository, "7.5-ondeck"
         """
-        url = 'v2/%s/manifests/%s' % (repository, reference)
-        r = self._get(url)
+        endpoint = 'manifests/%s' % reference
+        r = self._get(repository, endpoint)
         return r.json()
