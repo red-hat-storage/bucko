@@ -194,7 +194,7 @@ Sample ``bucko.conf`` contents::
     [koji]
     hub = https://koji.fedoraproject.org/kojihub
     web = http://koji.fedoraproject.org/koji
-    scm = git://example.com/containers/rhceph-rhel7#origin/%(branch)s
+    scm = git://example.com/containers/rhceph#origin/%(branch)s
     target = %(branch)s-containers-candidate
     krbservice = brewhub
 
@@ -204,7 +204,7 @@ Sample ``bucko.conf`` contents::
 
     [registry]
     # container registry with tags for parent images
-    url = http://pulp-docker01.example.com:8888
+    url = https://registry-proxy.example.com
 
     [ceph-3.0-rhel-7-base]
     # HTTP URLs to RHEL 7 Server and RHEL 7 Extras Yum .repo files
