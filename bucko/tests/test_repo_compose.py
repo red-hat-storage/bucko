@@ -3,10 +3,8 @@ from bucko.repo_compose import RepoCompose
 import productmd.compose
 import pytest
 try:
-    from configparser import ConfigParser
     from configparser import RawConfigParser
 except ImportError:
-    import ConfigParser
     from ConfigParser import RawConfigParser
 
 TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
