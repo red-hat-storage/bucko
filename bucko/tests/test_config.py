@@ -48,7 +48,7 @@ def test_lookup_nonfatal(simple_configp):
 
 
 def test_get_repo_urls(configp):
-    section = 'ceph-2-rhel-7-base'
+    section = 'ceph-4.0-rhel-8-base'
     result = config.get_repo_urls(configp, section)
     expected = set(['http://example.com/repo1.repo',
                     'http://example.com/repo2.repo'])
