@@ -5,6 +5,7 @@ import json
 import os
 from .log import log
 from bucko import config
+from bucko.container_publisher import ContainerPublisher
 from bucko.repo_compose import RepoCompose
 from bucko.publisher import Publisher
 from bucko.koji_builder import KojiBuilder
@@ -84,6 +85,15 @@ def get_publisher(configp):
     push_url = config.lookup(configp, 'publish', 'push')
     http_url = config.lookup(configp, 'publish', 'http')
     return Publisher(push_url, http_url)
+
+
+def get_container_publisher(configp):
+    """ Look up the registry host and token from a ConfigParser object. """
+    host = config.lookup(configp, 'publish', 'registry_host')
+    if not host:
+        return None
+    token = config.lookup(configp, 'publish', 'registry_token', fatal=True)
+    return ContainerPublisher(host, token)
 
 
 def write_metadata_file(filename, **kwargs):
@@ -211,6 +221,21 @@ def main():
 
     # Do a Koji build
     metadata = build_container(repo_urls, branch, parent_image, configp)
+
+    # Publish this Koji build to our registry
+    container_pub = get_container_publisher(configp)
+    if container_pub and 'repository' in metadata:
+        source_image = metadata['repository']
+        dest_namespace, _ = branch.split('-', 1)  # eg "ceph"
+        _, scratch_tag = source_image.split(':', 1)  # OSBS scratch build tag
+        for tag in ('latest', scratch_tag):
+            dest_repo = container_pub.publish(source_image,
+                                              dest_namespace,
+                                              branch,
+                                              tag)
+            # Add the new location to metadata['repositories'] so that we
+            # record it in the -osbs.json file below.
+            metadata['repositories'].append(dest_repo)
 
     # Store and publish our information about this build
     metadata['compose_url'] = compose_url
