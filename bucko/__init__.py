@@ -41,10 +41,11 @@ def parse_ci_message(msg, compose_url):
     # COMPOSE_URL environment variable (format string).
     (_, version, distro) = branch.split('-', 2)
     major = int(float(version))
-    distro = distro.upper()
+    distro_upper = distro.upper()
     result = compose_url % {'branch': branch,
                             'major': major,
-                            'distro': distro}
+                            'distro': distro,
+                            'distro_upper': distro_upper}
     log.info('transformed %s format string to %s' % (compose_url, result))
     return result
 
