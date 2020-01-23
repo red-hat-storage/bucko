@@ -39,10 +39,10 @@ class TestComposeUrlFromEnv(object):
         assert bucko.compose_url_from_env() == 'http://foo'
 
     def test_distgit_ci_message(self, monkeypatch):
-        tmpl = 'http://foo/%(branch)s/latest-RHCEPH-%(major)s-%(distro)s'
+        tmpl = 'http://foo/%(distro)s/%(branch)s/latest-RHCEPH-%(major)s-%(distro_upper)s'
         monkeypatch.setenv('COMPOSE_URL', tmpl)
         monkeypatch.setenv('CI_MESSAGE', '{"branch": "ceph-3.0-rhel-7"}')
-        expected = 'http://foo/ceph-3.0-rhel-7/latest-RHCEPH-3-RHEL-7'
+        expected = 'http://foo/rhel-7/ceph-3.0-rhel-7/latest-RHCEPH-3-RHEL-7'
         assert bucko.compose_url_from_env() == expected
 
 
