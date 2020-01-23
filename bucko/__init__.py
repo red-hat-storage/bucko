@@ -157,8 +157,7 @@ def build_container(repo_urls, branch, parent_image, configp):
     repositories = koji.get_repositories(task_id)
     if len(repositories) == 1:
         result['repository'] = repositories[0]
-    else:
-        result['repositories'] = repositories
+    result['repositories'] = repositories
 
     return result
 
