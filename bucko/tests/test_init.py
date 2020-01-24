@@ -125,3 +125,21 @@ class TestBuildContainer(object):
         results = bucko.build_container(repo_url, branch, parent_image, config)
         assert results['koji_task'] == 1234
         assert results['repository'] == 'http://registry.example.com/foo'
+
+
+class TestWritePropsFile(object):
+    def test_no_workspace(self, monkeypatch):
+        monkeypatch.delenv('WORKSPACE', raising=False)
+        metadata = {'foo': 'bar'}
+        # Does nothing:
+        bucko.write_props_file(**metadata)
+
+    def test_simple(self, monkeypatch, tmpdir):
+        monkeypatch.setenv('WORKSPACE', str(tmpdir))
+        metadata = {'foo': 'bar'}
+        props_path = tmpdir.join('osbs.props')
+        with tmpdir.as_cwd():
+            bucko.write_props_file(**metadata)
+        contents = props_path.read_text('utf-8')
+        expected = 'FOO=bar\n'
+        assert contents == expected

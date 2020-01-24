@@ -100,7 +100,7 @@ def write_props_file(**kwargs):
         log.info('WORKSPACE detected, writing osbs.props for Jenkins')
         props_path = os.path.join(os.environ['WORKSPACE'], 'osbs.props')
         with open(props_path, 'w') as props:
-            for key, value in kwargs.iteritems():
+            for key, value in kwargs.items():
                 props.write(key.upper() + '=' + str(value) + "\n")
 
 
