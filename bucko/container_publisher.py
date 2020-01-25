@@ -1,6 +1,7 @@
 import sys
 import subprocess
 from bucko.log import log
+import backoff
 
 
 """
@@ -32,9 +33,21 @@ class ContainerPublisher(object):
                                   repository=repository,
                                   tag=tag)
         self.login()
-        skopeo('copy', source, destination)
+        self.copy(source, destination)
         self.logout()
         return destination[9:]
+
+    @backoff.on_exception(backoff.expo,
+                          subprocess.CalledProcessError,
+                          max_tries=3)
+    def copy(self, source, destination):
+        """
+        Run "skopeo copy" with retries.
+
+        Sometimes "skopeo copy" will fail with "read: connection reset by
+        peer", so we should retry the copy operation a couple times.
+        """
+        skopeo('copy', source, destination)
 
     def login(self):
         # Don't print the password string to the log.
