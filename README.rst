@@ -191,6 +191,10 @@ Sample ``bucko.conf`` contents::
     #  HTTP(S) URL to the publish directory for OSBS to contact.
     http = http://example.com/~kdreyer/osbs
 
+    # container registry to mirror/publish the scratch images
+    registry_host = other-registry.example.com
+    registry_token = abc123
+
     [koji]
     hub = https://koji.fedoraproject.org/kojihub
     web = http://koji.fedoraproject.org/koji
@@ -222,3 +226,11 @@ The ``parent_image`` setting in each branch is optional. Define this in order
 to override the parent image. If this is not set, Bucko/OSBS will use the
 "FROM" line in the Dockerfile. This ``parent_image`` setting is useful if you
 want to build a container dist-git branch against a yet-unreleased base image.
+
+The ``registry_url`` setting in ``[publisher]`` is optional. Define this in
+order to publish the scratch images to a separate registry. For example, if
+the branch for the compose was ``ceph-4.0-rhel-8``, bucko will publish each
+image to ``https://other-registry.example.com/ceph/ceph-4.0-rhel-8:latest``.
+If you specify ``registry_url``, you must also specify ``registry_token``.
+This feature allows QE to use floating tags (eg. ``latest``) to pull images
+for each branch.
