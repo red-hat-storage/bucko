@@ -39,7 +39,10 @@ class ContainerPublisher(object):
 
     @backoff.on_exception(backoff.expo,
                           subprocess.CalledProcessError,
-                          max_tries=3)
+                          jitter=None,
+                          factor=5,
+                          max_value=60*5,
+                          max_tries=10)
     def copy(self, source, destination):
         """
         Run "skopeo copy" with retries.
