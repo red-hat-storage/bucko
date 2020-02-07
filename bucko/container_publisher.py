@@ -10,6 +10,10 @@ Publish container images to a registry with skopeo and podman.
 
 PY2 = sys.version_info[0] == 2
 
+# Skopeo expects to read the credential from /run/containers.
+# We have to force newer versions of podman to write to this location.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1800815
+REGISTRY_AUTH_FILE_ENV='REGISTRY_AUTH_FILE=/run/containers/0/auth.json'
 
 class ContainerPublisher(object):
     def __init__(self, host, token):
@@ -54,7 +58,8 @@ class ContainerPublisher(object):
 
     def login(self):
         # Don't print the password string to the log.
-        log.info('+ sudo podman login -p **** -u unused %s', self.host)
+        log.info('+ sudo podman %s login -p **** -u unused %s',
+                 REGISTRY_AUTH_FILE_ENV, self.host)
         try:
             podman('login', '-p', self.token, '-u', 'unused', self.host,
                    log_cmd=False, stderr=subprocess.STDOUT)
@@ -83,7 +88,7 @@ def cmd(*args, **kwargs):
 
 def podman(*args, **kwargs):
     """ Run a priv podman shell command, optionally returning the output """
-    args = ('sudo', 'podman') + args
+    args = ('sudo', REGISTRY_AUTH_FILE_ENV, 'podman') + args
     return cmd(*args, **kwargs)
 
 

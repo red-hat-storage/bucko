@@ -31,12 +31,13 @@ def test_publish(monkeypatch):
     tag = 'latest'
     p.publish(source_image, namespace, repository, tag)
     expected = [
-        ('sudo', 'podman', 'login', '-p', 'abc123', '-u', 'unused',
-         'registry.example.com'),
+        ('sudo', 'REGISTRY_AUTH_FILE=/run/containers/0/auth.json', 'podman',
+         'login', '-p', 'abc123', '-u', 'unused', 'registry.example.com'),
         ('sudo', 'skopeo', 'copy',
          'docker://registry.example.com/ceph/ceph:foo',
          'docker://registry.example.com/ceph/ceph-4.0-rhel-8:latest'),
-        ('sudo', 'podman', 'logout', 'registry.example.com'),
+        ('sudo', 'REGISTRY_AUTH_FILE=/run/containers/0/auth.json', 'podman',
+         'logout', 'registry.example.com'),
     ]
     assert recorder.calls
     assert recorder.calls == expected
