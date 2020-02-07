@@ -89,7 +89,7 @@ def get_publisher(configp):
 
 def get_container_publisher(configp):
     """ Look up the registry host and token from a ConfigParser object. """
-    host = config.lookup(configp, 'publish', 'registry_host')
+    host = config.lookup(configp, 'publish', 'registry_host', fatal=False)
     if not host:
         return None
     token = config.lookup(configp, 'publish', 'registry_token', fatal=True)
