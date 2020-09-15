@@ -55,7 +55,8 @@ class KojiBuilder(object):
 
         config = {'scratch': scratch,
                   'yum_repourls': list(repos),
-                  'git_branch': branch}
+                  'git_branch': branch,
+                  'signing_intent': 'unsigned'}
         if koji_parent_build:
             config['koji_parent_build'] = str(koji_parent_build)
 
