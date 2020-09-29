@@ -1,6 +1,7 @@
 import posixpath
 import koji
 import time
+from koji_cli.lib import activate_session
 
 """ Use the Koji API to build a container image """
 
@@ -12,16 +13,19 @@ class KojiBuilder(object):
         self.hub = hub
         self.web = web
         # Note: krbV authentication requires str values (not unicode) here:
-        opts = {'krbservice': str(krbservice)}
+        opts = {'krbservice': str(krbservice),
+                'authtype': 'kerberos',
+                'cert': ''}
         self.session = koji.ClientSession(str(hub), opts)
 
     def ensure_logged_in(self):
         """ Log in if we are not already logged in """
         if not self.session.logged_in:
-            try:
-                self.session.krb_login()
-            except koji.krbV.Krb5Error as e:
-                raise RuntimeError('Authentication failed: %s' % e.args[1])
+            self.session.opts['noauth'] = False
+            # Log in ("activate") this session:
+            # Note: this can raise SystemExit if there is a problem, eg with
+            # Kerberos:
+            activate_session(self.session, self.session.opts)
 
     def build_container(self, scm, target, branch, repos, scratch=True,
                         koji_parent_build=None):

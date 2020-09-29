@@ -11,8 +11,8 @@ class FakeKoji(object):
         return lambda *args, **kw: None
 
     @staticmethod
-    def ClientSession(*args):
-        return FakeClientSession()
+    def ClientSession(baseurl, opts):
+        return FakeClientSession(baseurl, opts)
 
 
 class FakeSystem(object):
@@ -27,8 +27,17 @@ class FakeClientSession(object):
     system = FakeSystem()
     tasks_waited = defaultdict(int)
 
+    def __init__(self, baseurl, opts):
+        self.opts = opts
+
     def __getattr__(self, name):
         return lambda *args, **kw: None
+
+    def gssapi_login(self, *args, **kw):
+        self.logged_in = True
+
+    def getAPIVersion(self):
+        return 1
 
     def getBuildTarget(self, target):
         return {}
@@ -55,6 +64,7 @@ class TestKojiBuilder(object):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
         k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
         k.ensure_logged_in()
+        assert k.session.logged_in is True
 
     def test_build_container(self, monkeypatch):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
