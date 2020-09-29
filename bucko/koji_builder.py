@@ -1,7 +1,7 @@
 import posixpath
 import koji
-import time
 from koji_cli.lib import activate_session
+from koji_cli.lib import watch_tasks
 
 """ Use the Koji API to build a container image """
 
@@ -63,42 +63,12 @@ class KojiBuilder(object):
         """ Watch a Koji task ID, printing its state transitions to STDOUT """
         weburl = self.session.opts['weburl']
         url = posixpath.join(weburl, 'taskinfo?taskID=%s' % id_)
-        task = KojiTask(id_, self.session)
-        task.update()
-        last_state = None
         print('Watching Koji task %s' % url)
-        while not task.is_done():
-            if last_state != task.state:
-                last_state = task.state
-                print('Task %s - %s' % (id_, task.state))
-            time.sleep(interval)
-            task.update()
-        print('Task %s is done - %s' % (id_, task.state))
+        task_result = watch_tasks(self.session, [id_], poll_interval=interval)
+        if task_result != 0:
+            raise RuntimeError('failed buildContainer task')
 
     def get_repositories(self, id_):
         """ Get the list of repositories for a container task. """
         result = self.session.getTaskResult(id_)
         return result['repositories']
-
-
-class KojiTask(object):
-    """ Inspired from TaskWatcher in /usr/bin/koji """
-    def __init__(self, id_, session):
-        self.id_ = id_
-        self.session = session
-        self.info = None
-
-    def update(self):
-        self.info = self.session.getTaskInfo(self.id_)
-        if self.info is None:
-            raise RuntimeError('No such task id %i' % self.id_)
-
-    @property
-    def state(self):
-        """ Return the textual representation of this task's state. """
-        if not self.info:
-            return 'unknown'
-        return koji.TASK_STATES[self.info['state']]
-
-    def is_done(self):
-        return (self.state in ('CLOSED', 'CANCELED', 'FAILED'))

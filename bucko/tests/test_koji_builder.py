@@ -53,13 +53,18 @@ class FakeClientSession(object):
     def buildContainer(self, *args, **kw):
         return 1234
 
-    def getTaskInfo(self, id_):
+    def getTaskInfo(self, id_, request=False):
         """ Return 'OPEN' state the first couple of times, then 'CLOSED'. """
+        task = {'host_id': None}
         self.tasks_waited[id_] += 1
         if self.tasks_waited[id_] < 5:
-            return {'state': koji.TASK_STATES['OPEN']}
+            task['state'] = koji.TASK_STATES['OPEN']
         else:
-            return {'state': koji.TASK_STATES['CLOSED']}
+            task['state'] = koji.TASK_STATES['CLOSED']
+        return task
+
+    def getTaskChildren(self, id_):
+        return []
 
 
 class TestKojiBuilder(object):
