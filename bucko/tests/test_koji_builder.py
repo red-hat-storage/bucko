@@ -1,4 +1,5 @@
 import koji
+from types import SimpleNamespace
 from bucko.koji_builder import KojiBuilder
 from collections import defaultdict
 
@@ -6,10 +7,20 @@ from collections import defaultdict
 class FakeKoji(object):
     """ Dummy koji module """
     TASK_STATES = koji.TASK_STATES
+    config = SimpleNamespace(
+        server='dummyhub',
+        weburl='dummyweb',
+        authtype='kerberos',
+        cert='',
+    )
 
     @staticmethod
     def ClientSession(baseurl, opts):
         return FakeClientSession(baseurl, opts)
+
+    @classmethod
+    def get_profile_module(cls, profile):
+        return cls
 
 
 class FakeSystem(object):
@@ -52,20 +63,21 @@ class FakeClientSession(object):
 
 
 class TestKojiBuilder(object):
-    def test_constructor(self):
-        k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
+    def test_constructor(self, monkeypatch):
+        monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
+        k = KojiBuilder('koji')
         assert isinstance(k, KojiBuilder)
 
     def test_ensure_logged_in(self, monkeypatch):
         """ Test ensure_logged_in() """
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
-        k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
+        k = KojiBuilder('koji')
         k.ensure_logged_in()
         assert k.session.logged_in is True
 
     def test_build_container(self, monkeypatch):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
-        k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
+        k = KojiBuilder('koji')
         scm = 'git://example.com/containers/rhceph#origin/ceph-4.0-rhel-8'
         target = 'ceph-4.0-rhel-8-containers-candidate'
         result = k.build_container(scm, target, 'ceph-4.0-rhel-8', [])
@@ -73,7 +85,7 @@ class TestKojiBuilder(object):
 
     def test_watch_task(self, monkeypatch, capsys):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
-        k = KojiBuilder('dummyhub', 'dummyweb', 'brewhub')
+        k = KojiBuilder('koji')
         k.watch_task(1234, interval=0)
         out, _ = capsys.readouterr()
         assert 'Watching Koji task dummyweb/taskinfo?taskID=1234' in out
