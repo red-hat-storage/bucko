@@ -2,7 +2,7 @@ import posixpath
 import koji
 import time
 
-""" I have a dream that one day Koji will have a usuable API """
+""" Use the Koji API to build a container image """
 
 
 class KojiBuilder(object):
