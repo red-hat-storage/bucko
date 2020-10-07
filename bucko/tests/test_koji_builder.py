@@ -4,11 +4,8 @@ from collections import defaultdict
 
 
 class FakeKoji(object):
-    """ Dummy koji module where everything is a no-op """
+    """ Dummy koji module """
     TASK_STATES = koji.TASK_STATES
-
-    def __getattr__(self, name):
-        return lambda *args, **kw: None
 
     @staticmethod
     def ClientSession(baseurl, opts):
