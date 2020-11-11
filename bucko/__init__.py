@@ -141,15 +141,13 @@ def get_branch(compose):
 def build_container(repo_urls, branch, parent_image, configp):
     """ Build a container with Koji. """
     kconf = dict(configp.items('koji', vars={'branch': branch}))
-    koji = KojiBuilder(hub=kconf['hub'],
-                       web=kconf['web'],
-                       krbservice=kconf['krbservice'])
+    koji = KojiBuilder(profile=kconf['profile'])
     parent = None
     if parent_image:
         registry_url = config.lookup(configp, 'registry', 'url')
         registry = Registry(registry_url)
         parent = registry.build(parent_image)  # bucko.build.Build
-    log.info('Building container at %s' % kconf['hub'])
+    log.info('Building container at %s' % koji.session.baseurl)
     task_id = koji.build_container(scm=kconf['scm'],
                                    target=kconf['target'],
                                    branch=branch,

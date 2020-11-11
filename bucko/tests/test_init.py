@@ -2,6 +2,7 @@ import os
 import productmd
 import pytest
 import bucko
+from types import SimpleNamespace
 try:
     from configparser import ConfigParser
 except ImportError:
@@ -92,6 +93,8 @@ class TestGetBranch(object):
 
 class FakeKojiBuilder(object):
     """ Dummy KojiBuilder module """
+    session = SimpleNamespace(baseurl='dummyhub')
+
     def __init__(self, *args, **kw):
         pass
 
@@ -110,9 +113,7 @@ class TestBuildContainer(object):
     def config(self):
         config = ConfigParser()
         config.add_section('koji')
-        config.set('koji', 'hub', 'dummyhub')
-        config.set('koji', 'web', 'dummyweb')
-        config.set('koji', 'krbservice', 'dummykrbservice')
+        config.set('koji', 'profile', 'koji')
         config.set('koji', 'scm', 'git://example.com')
         config.set('koji', 'target', 'foo-rhel-7-candidate')
         return config

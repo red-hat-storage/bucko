@@ -196,11 +196,9 @@ Sample ``bucko.conf`` contents::
     registry_token = abc123
 
     [koji]
-    hub = https://koji.fedoraproject.org/kojihub
-    web = http://koji.fedoraproject.org/koji
+    profile = mykoji
     scm = git://example.com/containers/rhceph#origin/%(branch)s
     target = %(branch)s-containers-candidate
-    krbservice = brewhub
 
     [keys]
     # List any extra keys here. For example, an internal signing key:

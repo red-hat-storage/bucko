@@ -9,14 +9,11 @@ from koji_cli.lib import activate_session
 class KojiBuilder(object):
     """ Simple Koji client that can barely build a container image. """
 
-    def __init__(self, hub, web, krbservice):
-        self.hub = hub
-        self.web = web
-        # Note: krbV authentication requires str values (not unicode) here:
-        opts = {'krbservice': str(krbservice),
-                'authtype': 'kerberos',
-                'cert': ''}
-        self.session = koji.ClientSession(str(hub), opts)
+    def __init__(self, profile):
+        self.profile = profile
+        mykoji = koji.get_profile_module(profile)
+        opts = vars(mykoji.config)
+        self.session = mykoji.ClientSession(mykoji.config.server, opts)
 
     def ensure_logged_in(self):
         """ Log in if we are not already logged in """
@@ -49,12 +46,14 @@ class KojiBuilder(object):
 
         # Verify we can build containers with this Koji instance:
         if 'buildContainer' not in self.session.system.listMethods():
-            msg = '%s does not support buildContainer' % self.hub
+            server = self.session.opts['server']
+            msg = '%s does not support buildContainer' % server
             raise RuntimeError(msg)
 
         # Sanity-check build target name:
         if self.session.getBuildTarget(target) is None:
-            msg = 'Build Target %s is not present in %s' % (target, self.hub)
+            server = self.session.opts['server']
+            msg = 'Build Target %s is not present in %s' % (target, server)
             raise RuntimeError(msg)
 
         config = {'scratch': scratch,
@@ -68,7 +67,8 @@ class KojiBuilder(object):
 
     def watch_task(self, id_, interval=5):
         """ Watch a Koji task ID, printing its state transitions to STDOUT """
-        url = posixpath.join(self.web, 'taskinfo?taskID=%s' % id_)
+        weburl = self.session.opts['weburl']
+        url = posixpath.join(weburl, 'taskinfo?taskID=%s' % id_)
         task = KojiTask(id_, self.session)
         task.update()
         last_state = None
