@@ -231,9 +231,10 @@ def main():
                                               dest_namespace,
                                               branch,
                                               tag)
-            # Add the new location to metadata['repositories'] so that we
-            # record it in the -osbs.json file below.
-            metadata['repositories'].append(dest_repo)
+            if dest_repo:
+                # Add the new location to metadata['repositories'] so that we
+                # record it in the -osbs.json file below.
+                metadata['repositories'].append(dest_repo)
 
     # Store and publish our information about this build
     metadata['compose_url'] = compose_url

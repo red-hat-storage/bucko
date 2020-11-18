@@ -1,7 +1,6 @@
 import sys
 import subprocess
 from bucko.log import log
-import backoff
 
 
 """
@@ -28,7 +27,7 @@ class ContainerPublisher(object):
         :param str namespace: the namespace in the dest repo, eg "ceph"
         :param str repository: the destination repo, eg "ceph-4.0-rhel-8"
         :param str tag: the tag for this destionation repo, eg "latest"
-        :returns: the destination (str)
+        :returns: the destination (str) or None if the copy failed.
         """
         source = 'docker://%s' % source_image
         tmpl = 'docker://{host}/{namespace}/{repository}:{tag}'
@@ -37,24 +36,31 @@ class ContainerPublisher(object):
                                   repository=repository,
                                   tag=tag)
         self.login()
-        self.copy(source, destination)
+        success = self.copy(source, destination)
         self.logout()
-        return destination[9:]
+        if success:
+            return destination[9:]
 
-    @backoff.on_exception(backoff.expo,
-                          subprocess.CalledProcessError,
-                          jitter=None,
-                          factor=5,
-                          max_value=60*5,
-                          max_tries=10)
     def copy(self, source, destination):
         """
-        Run "skopeo copy" with retries.
+        Run "skopeo copy" to publish this image to a destination.
 
         Sometimes "skopeo copy" will fail with "read: connection reset by
-        peer", so we should retry the copy operation a couple times.
+        peer" or "Error writing blob ...: unexpected EOF" (eg. INC1518133).
+
+        :returns: True if the copy succeeded, False if the copy failed.
         """
-        skopeo('copy', source, destination)
+        try:
+            skopeo('copy', source, destination)
+            return True
+        except subprocess.CalledProcessError as e:
+            if PY2:
+                output = e.output
+            else:
+                output = e.output.decode('utf-8')
+            log.warning('"skopeo copy" failed with exit code %d', e.returncode)
+            log.warning(output)
+        return False
 
     def login(self):
         # Don't print the password string to the log.

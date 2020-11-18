@@ -103,7 +103,6 @@ setup(
     license='GPLv2',
     include_package_data=True,
     install_requires=[
-        'backoff',
         'koji',
         'paramiko',
         'productmd>=1.3',
