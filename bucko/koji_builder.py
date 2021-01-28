@@ -44,12 +44,6 @@ class KojiBuilder(object):
         """
         self.ensure_logged_in()
 
-        # Verify we can build containers with this Koji instance:
-        if 'buildContainer' not in self.session.system.listMethods():
-            server = self.session.opts['server']
-            msg = '%s does not support buildContainer' % server
-            raise RuntimeError(msg)
-
         # Sanity-check build target name:
         if self.session.getBuildTarget(target) is None:
             server = self.session.opts['server']
