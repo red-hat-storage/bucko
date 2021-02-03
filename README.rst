@@ -105,9 +105,9 @@ words, why do we use bucko instead of something else?
 The reason we use our product composes is that we want to closely match the
 content that we are going to publish to Pulp (Red Hat's CDN). We we want our
 containers to be completely buildable using only the RPMs we publish to the
-CDN. That is important because `Freshmaker <https://pagure.io/freshmaker>`_
-uses the contents of our CDN repositories when it rebuilds containers for base
-image CVEs.
+CDN. That is important because `Freshmaker
+<https://github.com/redhat-exd-rebuilds/freshmaker>`_ uses the contents of our
+CDN repositories when it rebuilds containers for base image CVEs.
 
 In Ceph, we have several binary RPMs (subpackages) that we end up building in
 Koji. We only ship and support a subset of those RPMs as part of the product
