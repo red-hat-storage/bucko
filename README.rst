@@ -148,10 +148,29 @@ it reduces confusion when it's time to ship.
 * Scratch-built container == maybe not fully GPG-signed
 * Real container build == must be GPG-signed with the GA key.
 
-(Internally there is some initial work in the Errata Tool and MetaXOR to
-automatically inspect RPM signatures within containers and ultimately
-prevent non-GA-signed content from shipping live. This is still a work
-in progress. One bug to watch is https://bugzilla.redhat.com/1590550 .)
+Recently we've made some advances to make this workflow clearer:
+
+* An open-source tool `koji-container-signatures
+  <https://pagure.io/fork/ktdreyer/koji-tools/tree/koji-container-signatures>`_
+  makes it easier to view all RPM signatures within a container and check
+  unacceptable signature states. `Eventually
+  <https://github.com/containerbuildsystem/koji-containerbuild/issues/169>`_
+  this will go into the OSBS koji CLI.
+* Similarly, our internal automated workflow tool now checks RPM signatures
+  prior to attaching container builds to an advisory.
+* The Errata Tool verifies RPM signatures within containers and prevents
+  non-GA-signed RPMs from shipping live in containers (RHELWF-465).
+
+Also, there are downsides to only scratch-building:
+
+* The "ci" process is different than the "release candidate" process. There
+  are both technical differences and human process differences, and the latter
+  in particular costs time and organizational energy.
+* It makes it impossible for layered products to build on top of these images.
+  For example, we build OpenShift Container Storage product using the RH Ceph
+  Storage image as a base image, and this requires non-scratch images.
+
+For these reasons, we will extend Bucko to do non-scratch builds eventually.
 
 Integration with Pungi
 ----------------------
