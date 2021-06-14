@@ -107,10 +107,6 @@ setup(
         'paramiko',
         'productmd>=1.3',
     ],
-    tests_require=[
-        'pytest',
-        'httpretty',
-    ],
     packages=find_packages(exclude=['ez_setup']),
     cmdclass={'bump': BumpCommand, 'release': ReleaseCommand},
 )
