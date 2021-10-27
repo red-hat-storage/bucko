@@ -225,8 +225,8 @@ def main():
     if container_pub and 'repository' in metadata:
         source_image = metadata['repository']
         dest_namespace, _ = branch.split('-', 1)  # eg "ceph"
-        _, scratch_tag = source_image.split(':', 1)  # OSBS scratch build tag
-        for tag in ('latest', scratch_tag):
+        _, unique_tag = source_image.split(':', 1)  # OSBS unique build tag
+        for tag in ('latest', unique_tag):
             dest_repo = container_pub.publish(source_image,
                                               dest_namespace,
                                               branch,
