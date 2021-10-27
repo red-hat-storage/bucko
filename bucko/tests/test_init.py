@@ -123,7 +123,9 @@ class TestBuildContainer(object):
         repo_url = 'http://example.com/example.repo'
         branch = 'foo-3.0-rhel-7'
         parent_image = None
-        results = bucko.build_container(repo_url, branch, parent_image, config)
+        scratch = True
+        results = bucko.build_container(repo_url, branch, parent_image,
+                                        scratch, config)
         assert results['koji_task'] == 1234
         assert results['repository'] == 'http://registry.example.com/foo'
 

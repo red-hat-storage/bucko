@@ -138,7 +138,7 @@ def get_branch(compose):
     return '%s-%s-%s-%s' % (name, version, bp_short, bp_version)
 
 
-def build_container(repo_urls, branch, parent_image, configp):
+def build_container(repo_urls, branch, parent_image, scratch, configp):
     """ Build a container with Koji. """
     kconf = dict(configp.items('koji', vars={'branch': branch}))
     koji = KojiBuilder(profile=kconf['profile'])
@@ -152,7 +152,7 @@ def build_container(repo_urls, branch, parent_image, configp):
                                    target=kconf['target'],
                                    branch=branch,
                                    repos=repo_urls,
-                                   scratch=True,
+                                   scratch=scratch,
                                    koji_parent_build=parent)
     # Show information to the console.
     koji.watch_task(task_id)
@@ -176,6 +176,8 @@ def parse_args():
     parser.add_argument('--compose', required=False,
                         default=compose_url_from_env(),
                         help='HTTP(S) URL to a product Pungi compose.')
+    parser.add_argument('--scratch', default=True, action='store_true',
+                        help='scratch-build container image')
     return parser.parse_args()
 
 
@@ -218,7 +220,8 @@ def main():
     repo_urls.add(repo_url)
 
     # Do a Koji build
-    metadata = build_container(repo_urls, branch, parent_image, configp)
+    metadata = build_container(repo_urls, branch, parent_image, args.scratch,
+                               configp)
 
     # Publish this Koji build to our registry
     container_pub = get_container_publisher(configp)
