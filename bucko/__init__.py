@@ -157,6 +157,12 @@ def build_container(repo_urls, branch, parent_image, scratch, configp):
     # Show information to the console.
     koji.watch_task(task_id)
 
+    # Untag the build from the -candidate tag:
+    # There's no "skip_tag" parameter for buildContainer, so we must
+    # immediately untag it ourselves.
+    if not scratch:
+        koji.untag_task_result(task_id)
+
     # Return information about this build.
     result = {'koji_task': task_id}
 

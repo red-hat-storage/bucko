@@ -59,6 +59,18 @@ class FakeClientSession(object):
     def getTaskChildren(self, id_):
         return []
 
+    def getTaskResult(self, id_):
+        """ Return a non-scratch buildContainer task result """
+        return {
+            'koji_builds': [1234],  # list of koji build IDs
+        }
+
+    def listTags(self, build):
+        """ Return a list of tags for a build """
+        return [
+            {'name': 'ceph-candidate'},
+        ]
+
 
 class TestKojiBuilder(object):
     def test_constructor(self, monkeypatch):
@@ -87,3 +99,14 @@ class TestKojiBuilder(object):
         k.watch_task(1234, interval=0)
         out, _ = capsys.readouterr()
         assert 'Watching Koji task dummyweb/taskinfo?taskID=1234' in out
+
+    def test_untag_task_result(self, monkeypatch, capsys):
+        monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
+        k = KojiBuilder('koji')
+        k.untag_task_result(12345)
+        out, _ = capsys.readouterr()
+        expected = """\
+Checking dummyweb/buildinfo?buildID=1234 for tags to untag
+Untagging dummyweb/buildinfo?buildID=1234 from ceph-candidate
+"""
+        assert out == expected

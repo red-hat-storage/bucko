@@ -72,3 +72,20 @@ class KojiBuilder(object):
         """ Get the list of repositories for a container task. """
         result = self.session.getTaskResult(id_)
         return result['repositories']
+
+    def untag_task_result(self, task_id):
+        """ Untag the builds from this buildContainer task. """
+        result = self.session.getTaskResult(task_id)
+        build_ids = result['koji_builds']
+        for build_id in build_ids:
+            build_id = int(build_id)  # koji returns strs for some reason
+            weburl = self.session.opts['weburl']
+            url = posixpath.join(weburl, 'buildinfo?buildID=%s' % build_id)
+            print('Checking %s for tags to untag' % url)
+            tags = self.session.listTags(build=build_id)
+            if tags:
+                self.ensure_logged_in()
+            for tag in tags:
+                tag_name = tag['name']
+                print('Untagging %s from %s' % (url, tag_name))
+                self.session.untagBuild(tag_name, build_id, strict=False)
