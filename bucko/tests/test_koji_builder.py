@@ -23,16 +23,9 @@ class FakeKoji(object):
         return cls
 
 
-class FakeSystem(object):
-    """ Dummy koji.ClientSession.system """
-    def listMethods(self):
-        return ('buildContainer')
-
-
 class FakeClientSession(object):
     """ Dummy koji.ClientSession """
     logged_in = False
-    system = FakeSystem()
     tasks_waited = defaultdict(int)
 
     def __init__(self, baseurl, opts):
