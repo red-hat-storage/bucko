@@ -62,7 +62,7 @@ class FakeClientSession(object):
     def getTaskResult(self, id_):
         """ Return a non-scratch buildContainer task result """
         return {
-            'koji_builds': [1234],  # list of koji build IDs
+            'koji_builds': ['1234'],  # list of koji build IDs
         }
 
     def listTags(self, build):
