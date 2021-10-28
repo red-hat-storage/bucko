@@ -68,10 +68,31 @@ class KojiBuilder(object):
         if task_result != 0:
             raise RuntimeError('failed buildContainer task')
 
-    def get_repositories(self, id_):
-        """ Get the list of repositories for a container task. """
+    def get_repositories(self, id_, target):
+        """ Get the list of repositories for a container task.
+
+        The first item in this list is the OSBS unique tag's repo.
+        https://osbs.readthedocs.io/en/latest/users.html#image-tags
+        """
         result = self.session.getTaskResult(id_)
-        return result['repositories']
+        repositories = result['repositories']
+        unique_repo = None
+        for repository in repositories:
+            _, tag = repository.split(':', 1)  # eg "5", "latest", etc
+            if target in tag:
+                unique_repo = repository
+                break
+        if unique_repo:
+            # Move the unique_repo to the front of the list.
+            idx = repositories.index(unique_repo)
+            repositories.pop(idx)
+            repositories.insert(0, unique_repo)
+        else:
+            # We should never hit this, but just in case OSBS behavior
+            # changes for unique tag patterns, or we got something strange
+            # back from Koji for an unknown reason:
+            print('WARNING: could not find unique repo tag with %s' % target)
+        return repositories
 
     def untag_task_result(self, task_id):
         """ Untag the builds from this buildContainer task. """
