@@ -63,6 +63,11 @@ class FakeClientSession(object):
         """ Return a non-scratch buildContainer task result """
         return {
             'koji_builds': ['1234'],  # list of koji build IDs
+            'repositories': [
+                'registry.example.com/ceph:5',
+                'registry.example.com/ceph:ceph-candidate-123-45678',
+                'registry.example.com/ceph:5-1',
+            ],
         }
 
     def listTags(self, build):
@@ -99,6 +104,16 @@ class TestKojiBuilder(object):
         k.watch_task(1234, interval=0)
         out, _ = capsys.readouterr()
         assert 'Watching Koji task dummyweb/taskinfo?taskID=1234' in out
+
+    def test_get_repositories(self, monkeypatch, capsys):
+        monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
+        k = KojiBuilder('koji')
+        repos = k.get_repositories(12345, 'ceph-candidate')
+        assert repos == [
+            'registry.example.com/ceph:ceph-candidate-123-45678',
+            'registry.example.com/ceph:5',
+            'registry.example.com/ceph:5-1',
+        ]
 
     def test_untag_task_result(self, monkeypatch, capsys):
         monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)

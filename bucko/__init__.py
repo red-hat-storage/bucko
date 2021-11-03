@@ -166,11 +166,9 @@ def build_container(repo_urls, branch, parent_image, scratch, configp):
     # Return information about this build.
     result = {'koji_task': task_id}
 
-    # Collapse "repositories" to "repository" if there was only one for
-    # simplicity.
-    repositories = koji.get_repositories(task_id)
-    if len(repositories) == 1:
-        result['repository'] = repositories[0]
+    repositories = koji.get_repositories(task_id, kconf['target'])
+    # "repository" (first in the list) is the OSBS unique tag.
+    result['repository'] = repositories[0]
     result['repositories'] = repositories
 
     return result
