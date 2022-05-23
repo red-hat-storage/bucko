@@ -53,3 +53,9 @@ def test_get_repo_urls(configp):
     expected = set(['http://example.com/repo1.repo',
                     'http://example.com/repo2.repo'])
     assert result == expected
+
+
+def test_get_repo_urls_empty(configp):
+    section = 'ceph-norepos-rhel-8-base'
+    result = config.get_repo_urls(configp, section)
+    assert result == set()

@@ -236,8 +236,10 @@ Bucko will interpolate the ``%(branch)s`` format string according to the
 compose's metadata. For example, bucko will choose a ``branch`` value of
 ``ceph-3.0-rhel-7`` when processing a ``RHCEPH 3.0`` compose.
 
-The ``[*-base]`` sections are unique per branch. Please define one for each
-branch you expect to use.
+The ``[*-base]`` sections are optional and unique per branch. If you define
+one for your branch, bucko will add the repo files to the container build. If
+you do not define one for your branch, bucko will add no additional Yum repos
+to the build beyond the repos from the compose itself.
 
 The ``parent_image`` setting in each branch is optional. Define this in order
 to override the parent image. If this is not set, Bucko/OSBS will use the
