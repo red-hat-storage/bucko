@@ -167,7 +167,7 @@ Also, there are downsides to only scratch-building:
   are both technical differences and human process differences, and the latter
   in particular costs time and organizational energy.
 * It makes it impossible for layered products to build on top of these images.
-  For example, we build OpenShift Container Storage product using the RH Ceph
+  For example, we build OpenShift Data Foundation product using the RH Ceph
   Storage image as a base image, and this requires non-scratch images.
 
 For these reasons, we will extend Bucko to do non-scratch builds eventually.
