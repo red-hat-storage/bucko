@@ -31,10 +31,14 @@ def get_repo_urls(configp, section):
     """
     Return a set of URLs for this configparser section.
 
+    If this section does not exist, return an empty set.
+
     :param str section: eg. 'ceph-3.0-rhel-7-base'
     :returns: set of URLs for Yum .repo files
     """
     urls = set()
+    if section not in configp.sections():
+        return urls
     items = configp.items(section)
     for key, url in items:
         if not key.startswith('repo'):
