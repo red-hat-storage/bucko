@@ -8,6 +8,8 @@ Methods to interact with our container registry API
 
 # https://docs.docker.com/registry/spec/api/#detail
 
+# Possibly affected by https://access.redhat.com/articles/6138332 ?
+
 
 class Registry(object):
     """
