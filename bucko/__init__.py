@@ -160,6 +160,7 @@ def build_container(repo_urls, branch, parent_image, scratch, configp):
     # Untag the build from the -candidate tag:
     # There's no "skip_tag" parameter for buildContainer, so we must
     # immediately untag it ourselves.
+    # CLOUDBLD-5091 is the RFE to add skip-tag.
     if not scratch:
         koji.untag_task_result(task_id)
 
