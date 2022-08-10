@@ -35,8 +35,7 @@ class ContainerPublisher(object):
                                   namespace=namespace,
                                   repository=repository,
                                   tag=tag)
-        self.login()
-        success = self.copy(source, destination)
+        success = self.login() and self.copy(source, destination)
         self.logout()
         if success:
             return destination[9:]
@@ -63,19 +62,29 @@ class ContainerPublisher(object):
         return False
 
     def login(self):
+        """
+        Run "podman login" to authenticate for copy().
+
+        Sometimes "podman login" will fail with "invalid username/password",
+        even if the token is correct.
+
+        :returns: True if the login succeeded, False if the login failed.
+        """
         # Don't print the password string to the log.
         log.info('+ sudo podman %s login -p **** -u unused %s',
                  REGISTRY_AUTH_FILE_ENV, self.host)
         try:
             podman('login', '-p', self.token, '-u', 'unused', self.host,
                    log_cmd=False, stderr=subprocess.STDOUT)
+            return True
         except subprocess.CalledProcessError as e:
             if PY2:
                 output = e.output
             else:
                 output = e.output.decode('utf-8')
-            log.error(output)
-            raise SystemExit(e.returncode)
+            log.warning('"podman login" failed with exit code %d', e.returncode)
+            log.warning(output)
+            return False
 
     def logout(self):
         podman('logout', self.host)
