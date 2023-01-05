@@ -4,13 +4,15 @@ on: [push, pull_request]
 
 jobs:
   tox:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 5
       matrix:
-        python-version:
-        - 3.6
-        - 3.9
+        include:
+          - python-version: 3.6
+            os: ubuntu-20.04
+          - python-version: 3.9
+            os: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -23,7 +25,9 @@ jobs:
         sudo apt-get install libkrb5-dev
         pip install tox
     - name: Test with tox
-      run: tox -e py -- --cov-report=xml bucko/tests
+      run: |
+        PY=py$(echo ${{ matrix.python-version }} | tr -d ".")
+        tox -e ${PY} -- --cov-report=xml bucko/tests
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v2
       with:
