@@ -104,6 +104,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'koji',
+        'odcs[client]',
         'paramiko',
         'productmd>=1.3',
     ],

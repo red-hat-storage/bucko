@@ -246,6 +246,13 @@ to override the parent image. If this is not set, Bucko/OSBS will use the
 "FROM" line in the Dockerfile. This ``parent_image`` setting is useful if you
 want to build a container dist-git branch against a yet-unreleased base image.
 
+The ``odcs_tag`` setting in each branch is optional. Define this in order to
+make an additional tag's RPMs available during your container build. This
+mimics how OSBS generates ODCS composes from Koji's build targets, but it
+provides more flexibility. For example, to add your ``-candidate`` tag's RPMs
+to Bucko's CI builds without affecting other container builds (eg. release
+candidates), use this option.
+
 The ``registry_url`` setting in ``[publisher]`` is optional. Define this in
 order to publish the scratch images to a separate registry. For example, if
 the branch for the compose was ``ceph-4.0-rhel-8``, bucko will publish each
