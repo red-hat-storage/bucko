@@ -5,6 +5,7 @@ import json
 import os
 from .log import log
 from bucko import config
+from bucko import odcs_manager
 from bucko.container_publisher import ContainerPublisher
 from bucko.repo_compose import RepoCompose
 from bucko.publisher import Publisher
@@ -223,6 +224,12 @@ def main():
     for url in repo_urls:
         log.info('Additional .repo configured: %s' % url)
     repo_urls.add(repo_url)
+    odcs_tag = config.lookup(configp, section, 'odcs_tag', fatal=False)
+    if odcs_tag:
+        log.info('odcs_tag configured: %s' % odcs_tag)
+        odcs_repo_url = odcs_manager.generate(odcs_tag)
+        log.info('Adding odcs repo url %s' % odcs_repo_url)
+        repo_urls.add(odcs_repo_url)
 
     # Do a Koji build
     metadata = build_container(repo_urls, branch, parent_image, args.scratch,
