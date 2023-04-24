@@ -118,7 +118,7 @@ class Registry(object):
         # repository: image repository name, eg. "rhel7"
         # reference: tag name in the repository, eg. "7.5-ondeck"
         data = self.config(repository, reference)
-        labels = data['container_config']['Labels']
+        labels = data['config']['Labels']
         return Build(labels['com.redhat.component'],
                      labels['version'],
                      labels['release'])
