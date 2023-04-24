@@ -77,8 +77,8 @@ class Registry(object):
         """
         Get and store a token for this repo
         """
-        auth_url = '%s?scope=repository:%s:pull' % (realm, repository)
-        r = self.session.get(auth_url)
+        scope = f'repository:{repository}:pull'
+        r = self.session.get(realm, params={'scope': scope})
         r.raise_for_status()
         data = r.json()
         token = data['token']
