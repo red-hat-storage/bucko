@@ -65,9 +65,10 @@ class Registry(object):
         :returns: realm URL
         """
         auth_header = response.headers['WWW-Authenticate']
-        parts = auth_header.split(' ')
-        if parts[0] != 'Bearer':
+        auth_type, bearer = auth_header.split(' ', 1)
+        if auth_type != 'Bearer':
             raise ValueError('WWW-Authenticate: %s' % auth_header)
+        parts = bearer.split(',')
         for part in parts:
             if part.startswith('realm='):
                 realm = part[6:].strip('"')
