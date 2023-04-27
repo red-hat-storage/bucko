@@ -245,6 +245,8 @@ The ``parent_image`` setting in each branch is optional. Define this in order
 to override the parent image. If this is not set, Bucko/OSBS will use the
 "FROM" line in the Dockerfile. This ``parent_image`` setting is useful if you
 want to build a container dist-git branch against a yet-unreleased base image.
+It's also useful to build in a staging environment when the ``FROM ...``
+parent image only exists in the production Koji.
 
 The ``odcs_tag`` setting in each branch is optional. Define this in order to
 make an additional tag's RPMs available during your container build. This
