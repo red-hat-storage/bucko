@@ -4,7 +4,7 @@ try:
 except ImportError:
     from urlparse import urlparse
 import os
-from paramiko import SSHClient
+import paramiko
 import shutil
 
 """
@@ -13,6 +13,10 @@ Publish files to a "push URL", and retrieve them via an "HTTP URL".
 The "push URL" can be a file:// URL for local testing or an sftp:// URL for
 publishing to a remote web server.
 """
+
+import logging
+paramiko.util.get_logger("paramiko.transport").setLevel(logging.DEBUG)
+paramiko.util.get_logger("paramiko").setLevel(logging.DEBUG)
 
 
 class Publisher(object):
@@ -35,7 +39,7 @@ class Publisher(object):
         """ Publish a file to an SFTP server. """
         url = urlparse(self.push_url)
         destfile = os.path.join(url.path, os.path.basename(file_))
-        ssh = SSHClient()
+        ssh = paramiko.SSHClient()
         ssh.load_system_host_keys()
         # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(url.netloc.split('@')[-1], username=url.username)
