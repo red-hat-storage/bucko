@@ -1,3 +1,7 @@
+from urllib.parse import urlparse
+import base64
+import os
+import json
 import posixpath
 import requests
 from bucko.build import Build
@@ -82,6 +86,11 @@ class Registry(object):
         """
         Get and store a Bearer token for this repository.
 
+        If we have a saved username+password from podman-login, we'll
+        authenticate to the "realm" URL with that. If not, we will not perform
+        any authentication to "realm", and we'll simply obtain an anonymous
+        pull token.
+
         :realm str: eg. "https://registry.example.com/oauth/token"
         :service str: eg. "registry", or None
         :repository str: eg. "cp/ibm-ceph/prometheus-node-exporter"
@@ -89,12 +98,48 @@ class Registry(object):
         params = {'scope': f'repository:{repository}:pull'}
         if service:
             params['service'] = service
-        r = self.session.get(realm, params=params)
+        r = self.session.get(realm, params=params, auth=self.auth)
         r.raise_for_status()
         data = r.json()
         token = data['token']
         self.tokens[repository] = token
         return token
+
+    @property
+    def auth(self):
+        """ Returns HTTPBasicAuth if we have a saved credential, or None. """
+        o = urlparse(self.baseurl)
+        credential = self.load_credentials(o.hostname)
+        if not credential:
+            return None
+        username, password = credential
+        return requests.auth.HTTPBasicAuth(username, password)
+
+    def load_credentials(self, hostname):
+        """
+        Read credentials from podman's default location,
+        ${XDG_RUNTIME_DIR}/containers/auth.json.
+
+        See podman-login(1) for details.
+
+        :returns: two-element list (the username and password), or None
+        """
+        if not os.getenv('XDG_RUNTIME_DIR'):
+            return None
+        authfile = os.path.join(
+            os.environ['XDG_RUNTIME_DIR'], 'containers', 'auth.json')
+        try:
+            with open(authfile) as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            return None
+        auths = data.get('auths', {})
+        settings = auths.get(hostname, {})
+        auth = settings.get('auth')
+        if not auth:
+            return None
+        username_password = base64.b64decode(auth).decode()
+        return username_password.split(':', 1)
 
     def _get(self, repository, endpoint):
         """
