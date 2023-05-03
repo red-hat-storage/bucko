@@ -57,29 +57,39 @@ class Registry(object):
         config = self.blob(repository, manifest_digest)
         return config
 
-    def find_realm_from_header(self, response):
+    def find_realm_service(self, response):
         """
-        Parse the headers of this response for the realm URL.
+        Parse the headers of this response for the realm URL and service name.
 
         :param Reponse response: requests.Response object
-        :returns: realm URL
+        :returns: two element tuple containing the realm URL and service name.
         """
         auth_header = response.headers['WWW-Authenticate']
         auth_type, bearer = auth_header.split(' ', 1)
         if auth_type != 'Bearer':
             raise ValueError('WWW-Authenticate: %s' % auth_header)
+        realm = None
+        service = None
         parts = bearer.split(',')
         for part in parts:
             if part.startswith('realm='):
                 realm = part[6:].strip('"')
-                return realm
+            if part.startswith('service='):
+                service = part[8:].strip('"')
+        return (realm, service)
 
-    def store_token(self, realm, repository):
+    def store_token(self, realm, service, repository):
         """
-        Get and store a token for this repo
+        Get and store a Bearer token for this repository.
+
+        :realm str: eg. "https://registry.example.com/oauth/token"
+        :service str: eg. "registry", or None
+        :repository str: eg. "cp/ibm-ceph/prometheus-node-exporter"
         """
-        scope = f'repository:{repository}:pull'
-        r = self.session.get(realm, params={'scope': scope})
+        params = {'scope': f'repository:{repository}:pull'}
+        if service:
+            params['service'] = service
+        r = self.session.get(realm, params=params)
         r.raise_for_status()
         data = r.json()
         token = data['token']
@@ -100,8 +110,8 @@ class Registry(object):
         if not token:
             r = self.session.get(url)
             if r.status_code == 401:
-                realm = self.find_realm_from_header(r)
-                self.store_token(realm, repository)
+                (realm, service) = self.find_realm_service(r)
+                self.store_token(realm, service, repository)
                 return self._get(repository, endpoint)
         headers = {'Authorization': 'Bearer %s' % token}
         r = self.session.get(url, headers=headers)
