@@ -84,7 +84,7 @@ class Registry(object):
 
     def store_token(self, realm, service, repository):
         """
-        Get and store a Bearer token for this repository.
+        Get and store a JWT Bearer token for this repository.
 
         If we have a saved username+password from podman-login, we'll
         authenticate to the "realm" URL with that. If not, we will not perform
