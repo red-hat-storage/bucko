@@ -4,7 +4,7 @@ try:
 except ImportError:
     from urlparse import urlparse
 import os
-from paramiko import SSHClient
+import paramiko
 import shutil
 
 """
@@ -35,7 +35,7 @@ class Publisher(object):
         """ Publish a file to an SFTP server. """
         url = urlparse(self.push_url)
         destfile = os.path.join(url.path, os.path.basename(file_))
-        ssh = SSHClient()
+        ssh = paramiko.SSHClient()
         ssh.load_system_host_keys()
         # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(url.netloc.split('@')[-1], username=url.username)
