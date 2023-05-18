@@ -39,8 +39,12 @@ class Publisher(object):
         ssh.load_system_host_keys()
         host = url.netloc.split('@')[-1]
         # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(host, username=url.username)
-
+        try:
+            ssh.connect(host, username=url.username)
+        except paramiko.ssh_exception.AuthenticationException:
+            ssh.connect(host, username=url.username,
+                        disabled_algorithms={'pubkeys': ["rsa-sha2-512",
+                                                         "rsa-sha2-256"]})
         sftp = ssh.open_sftp()
         sftp.put(file_, destfile)
         sftp.close()
