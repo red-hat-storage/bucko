@@ -30,7 +30,7 @@ class TestPublisher(object):
 
     def test_sftp(self, monkeypatch):
         """ Test publishing with an sftp:// URL """
-        monkeypatch.setattr('bucko.publisher.SSHClient', FakeSSHClient)
+        monkeypatch.setattr('bucko.publisher.paramiko.SSHClient', FakeSSHClient)
         p = Publisher(PUSH_URL, HTTP_URL)
         result = p.publish('test.repo')
         assert result == posixpath.join(HTTP_URL, 'test.repo')
