@@ -33,7 +33,7 @@ class KojiBuilder(object):
         :param str target: Koji build target.
                            Eg. 'foo-rhel-7-containers-candidate'
         :param str branch: dist-git branch. Eg. 'foo-rhel-7'
-        :param list repos: URLs to Yum .repo files.
+        :param set repos: URLs to Yum .repo files.
         :param bool scratch: Whether to scratch-build this container
                              (default: True).
         :param str koji_parent_build: Override the "FROM" line in the
