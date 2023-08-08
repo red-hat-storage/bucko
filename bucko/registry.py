@@ -91,9 +91,9 @@ class Registry(object):
         any authentication to "realm", and we'll simply obtain an anonymous
         pull token.
 
-        :realm str: eg. "https://registry.example.com/oauth/token"
-        :service str: eg. "registry", or None
-        :repository str: eg. "cp/ibm-ceph/prometheus-node-exporter"
+        :param str realm: eg. "https://registry.example.com/oauth/token"
+        :param str service: eg. "registry", or None
+        :param str repository: eg. "cp/ibm-ceph/prometheus-node-exporter"
         """
         params = {'scope': f'repository:{repository}:pull'}
         if service:
