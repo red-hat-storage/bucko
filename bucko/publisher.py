@@ -6,6 +6,7 @@ except ImportError:
 import os
 import paramiko
 import shutil
+import boto3
 
 """
 Publish files to a "push URL", and retrieve them via an "HTTP URL".
@@ -26,8 +27,10 @@ class Publisher(object):
             self._ssh_publish(file_)
         elif o.scheme == 'file':
             self._fs_publish(file_)
+        elif o.scheme == 's3':
+            self._s3_publish(file_)
         else:
-            err = 'push_url must be an sftp:// or file:// URL'
+            err = 'push_url must be an sftp://, file://, or s3:// URL'
             raise NotImplementedError(err)
         return posixpath.join(self.http_url, os.path.basename(file_))
 
@@ -50,3 +53,17 @@ class Publisher(object):
         url = urlparse(self.push_url)
         destfile = os.path.join(url.path, os.path.basename(file_))
         shutil.copy(file_, destfile)
+
+    def _s3_publish(self, file_):
+        """ Publish a file to an s3 server. """
+        # Must set these env variables:
+        assert os.environ['AWS_ACCESS_KEY_ID']
+        assert os.environ['AWS_SECRET_ACCESS_KEY']
+        s3 = boto3.client('s3', endpoint_url=os.environ['AWS_ENDPOINT_URL'])
+        url = urlparse(self.push_url)
+        bucket = url.netloc
+        object_name = os.path.basename(file_)
+        s3.upload_file(
+            file_, bucket, object_name,
+            ExtraArgs={'ContentType': 'text/plain'},
+        )

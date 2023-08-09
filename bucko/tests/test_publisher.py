@@ -21,6 +21,21 @@ class FakeSFTPClient(object):
         return lambda *args, **kw: None
 
 
+class FakeBotoClient(object):
+    """ Dummy boto3.client where everything is a no-op """
+    def __init__(self, *args, **kw):
+        pass
+
+    def __getattr__(self, name):
+        return lambda *args, **kw: None
+
+
+class FakeBoto3(object):
+    """ Dummy boto3 where everything is a no-op """
+    client = FakeBotoClient
+
+
+
 class TestPublisher(object):
     def test_constructor(self):
         p = Publisher(PUSH_URL, HTTP_URL)
@@ -44,3 +59,13 @@ class TestPublisher(object):
         assert result == posixpath.join(HTTP_URL, 'test.repo')
         # Ensure the file exists at this destination location on disk
         assert tmpdir.join('dest').join('test.repo').exists()
+
+    def test_s3(self, monkeypatch):
+        """ Test publishing with an s3:// URL """
+        monkeypatch.setattr('bucko.publisher.boto3', FakeBoto3)
+        monkeypatch.setenv('AWS_ACCESS_KEY_ID', 'myaccesskey')
+        monkeypatch.setenv('AWS_SECRET_ACCESS_KEY', 'mysecretkey')
+        monkeypatch.setenv('AWS_ENDPOINT_URL', 's3.example.com')
+        p = Publisher('s3://mybucket', HTTP_URL)
+        result = p.publish('test.repo')
+        assert result == posixpath.join(HTTP_URL, 'test.repo')
