@@ -117,7 +117,9 @@ class Registry(object):
 
     @property
     def authfile(self):
-        # skopeo requires XDG_RUNTIME_DIR
+        if os.getenv('REGISTRY_AUTH_FILE'):
+            return os.environ['REGISTRY_AUTH_FILE']
+        # skopeo requires XDG_RUNTIME_DIR if REGISTRY_AUTH_FILE is unset,
         # https://github.com/containers/image/issues/1097
         # For simplicity we will require it also.
         if not os.getenv('XDG_RUNTIME_DIR'):
