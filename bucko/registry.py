@@ -115,21 +115,31 @@ class Registry(object):
         username, password = credential
         return requests.auth.HTTPBasicAuth(username, password)
 
+    @property
+    def authfile(self):
+        if os.getenv('REGISTRY_AUTH_FILE'):
+            return os.environ['REGISTRY_AUTH_FILE']
+        # skopeo requires XDG_RUNTIME_DIR if REGISTRY_AUTH_FILE is unset,
+        # https://github.com/containers/image/issues/1097
+        # For simplicity we will require it also.
+        if not os.getenv('XDG_RUNTIME_DIR'):
+            return None
+        return os.path.join(os.environ['XDG_RUNTIME_DIR'],
+                            'containers', 'auth.json')
+
     def load_credentials(self, hostname):
         """
         Read credentials from podman's default location,
         ${XDG_RUNTIME_DIR}/containers/auth.json.
 
-        See podman-login(1) for details.
+        See podman-login(1) and skopeo-login(1) for details.
 
         :returns: two-element list (the username and password), or None
         """
-        if not os.getenv('XDG_RUNTIME_DIR'):
+        if not self.authfile:
             return None
-        authfile = os.path.join(
-            os.environ['XDG_RUNTIME_DIR'], 'containers', 'auth.json')
         try:
-            with open(authfile) as f:
+            with open(self.authfile) as f:
                 data = json.load(f)
         except FileNotFoundError:
             return None
