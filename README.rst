@@ -204,8 +204,10 @@ falling back to ``$HOME/.bucko.conf``.
 Sample ``bucko.conf`` contents::
 
     [publish]
-    # sftp:// or file:// location to publish the .repo file.
+    # sftp://, file://, or s3:// location to publish the .repo file.
     push = sftp:///home/remote/kdreyer/public_html/osbs
+    # s3 example:
+    # push = s3://my-bucket/
 
     #  HTTP(S) URL to the publish directory for OSBS to contact.
     http = http://example.com/~kdreyer/osbs
@@ -235,6 +237,10 @@ Sample ``bucko.conf`` contents::
 Bucko will interpolate the ``%(branch)s`` format string according to the
 compose's metadata. For example, bucko will choose a ``branch`` value of
 ``ceph-3.0-rhel-7`` when processing a ``RHCEPH 3.0`` compose.
+
+If you set a ``s3://`` URL for ``push_url``, you must set the
+``AWS_ACCESS_KEY_ID``, ``AWS_SECRET_ACCESS_KEY``, ``AWS_ENDPOINT_URL``
+environment variables.
 
 The ``[*-base]`` sections are optional and unique per branch. If you define
 one for your branch, bucko will add the repo files to the container build. If
