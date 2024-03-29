@@ -103,6 +103,7 @@ setup(
     license='GPLv2',
     include_package_data=True,
     install_requires=[
+        'boto3',
         'koji',
         'odcs[client]',
         'paramiko',
