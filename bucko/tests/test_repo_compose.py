@@ -57,3 +57,16 @@ class TestRepoComposeYumRepo(object):
                     'MYPRODUCT-2.1-RHEL-7-OSD',
                     'MYPRODUCT-2.1-RHEL-7-Tools']
         assert config.sections() == expected
+
+    def test_baseurl(self, repocompose, monkeypatch):
+        """ Test a web URL """
+        monkeypatch.setattr(repocompose, 'get_variant_url',
+                            lambda variant, arch:
+                            f'https://noexist.example.com/composes/{variant}')
+        path = repocompose.write_yum_repo_file()
+        # Verify the contents with ConfigParser
+        config = RawConfigParser()
+        config.read(path)
+        result = config.get('MYPRODUCT-2.1-RHEL-7-Tools', 'baseurl')
+        expected = 'https://noexist.example.com/composes/Tools'
+        assert result == expected
