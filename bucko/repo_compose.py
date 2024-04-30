@@ -85,6 +85,8 @@ class RepoCompose(productmd.compose.Compose):
             url = self.get_variant_url(variant, arch)
             # XXX Terrible hack ahead:
             url = url.replace('x86_64', '$basearch')
+            # XXX Hack for CLOUDWF-10277:
+            url = url.replace('https://', 'http://')
             gpgkey = self.get_variant_gpg_key(variant, arch)
             config.add_section(name)
             config.set(name, 'name', self.info.compose.id + ' ' + uid)
