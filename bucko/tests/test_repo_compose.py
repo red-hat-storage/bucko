@@ -68,5 +68,6 @@ class TestRepoComposeYumRepo(object):
         config = RawConfigParser()
         config.read(path)
         result = config.get('MYPRODUCT-2.1-RHEL-7-Tools', 'baseurl')
-        expected = 'https://noexist.example.com/composes/Tools'
+        # XXX: hack for CLOUDWF-10277, this is plaintext http:
+        expected = 'http://noexist.example.com/composes/Tools'
         assert result == expected
