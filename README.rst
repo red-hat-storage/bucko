@@ -268,3 +268,35 @@ image to ``https://other-registry.example.com/ceph/ceph-4.0-rhel-8:latest``.
 If you specify ``registry_url``, you must also specify ``registry_token``.
 This feature allows QE to use floating tags (eg. ``latest``) to pull images
 for each branch.
+
+s3 bucket setup
+---------------
+
+To setup an s3 bucket, you can use the `mc utility
+<https://github.com/minio/mc#binary-download>`_. Download it and install it to
+a location in your ``$PATH``.
+
+```
+curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+mv mc ~/bin/
+```
+
+Here is an example of creating a bucket with the ``mc`` utility::
+
+    set +o history
+    export AWS_ENDPOINT_URL=https://s3.example.com
+    export AWS_ACCESS_KEY_ID=myaccesskey
+    export AWS_SECRET_ACCESS_KEY=mysecretkey
+    set -o history
+
+    mc alias set upshift $AWS_ENDPOINT_URL $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+    mc mb upshift/ceph-containers
+    mc anonymous set download upshift/ceph-containers
+
+Once you create the bucket, set ``push_url = s3://ceph-containers`` in
+``bucko.conf`` so that bucko will upload to it.
+
+You can add a nice HTML/JavaScript frontend for the bucket with
+https://github.com/flightlesstux/S3-Directory-Listing so that you can easily
+view the ``.repo`` and ``.json`` files in the bucket.
