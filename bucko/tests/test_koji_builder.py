@@ -40,11 +40,14 @@ class FakeClientSession(object):
     def getAPIVersion(self):
         return 1
 
-    def getBuildTarget(self, target):
-        return {}
+    def getBuildTarget(self, target, strict=False):
+        return {'build_tag': 123}
 
     def buildContainer(self, *args, **kw):
         return 1234
+
+    def getTag(self, tag, strict=False):
+        return {'arches': 'x86_64 ppc64le s390x'}
 
     def getTaskInfo(self, id_, request=False):
         """ Return 'OPEN' state the first couple of times, then 'CLOSED'. """
@@ -125,3 +128,10 @@ Checking dummyweb/buildinfo?buildID=1234 for tags to untag
 Untagging dummyweb/buildinfo?buildID=1234 from ceph-candidate
 """
         assert out == expected
+
+    def test_get_target_arches(self, monkeypatch, capsys):
+        monkeypatch.setattr('bucko.koji_builder.koji', FakeKoji)
+        k = KojiBuilder('koji')
+        target = 'ceph-7.0-rhel-9-containers-candidate'
+        result = k.get_target_arches(target)
+        assert result == 'x86_64 ppc64le s390x'

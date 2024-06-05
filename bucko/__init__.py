@@ -224,10 +224,14 @@ def main():
     for url in repo_urls:
         log.info('Additional .repo configured: %s' % url)
     repo_urls.add(repo_url)
+
     odcs_tag = config.lookup(configp, section, 'odcs_tag', fatal=False)
     if odcs_tag:
         log.info('odcs_tag configured: %s' % odcs_tag)
-        odcs_repo_url = odcs_manager.generate(odcs_tag)
+        kconf = dict(configp.items('koji', vars={'branch': branch}))
+        koji = KojiBuilder(profile=kconf['profile'])
+        arches = koji.get_target_arches(kconf['target'])
+        odcs_repo_url = odcs_manager.generate(odcs_tag, arches)
         log.info('Adding odcs repo url %s' % odcs_repo_url)
         repo_urls.add(odcs_repo_url)
 
