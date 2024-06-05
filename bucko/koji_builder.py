@@ -53,6 +53,7 @@ class KojiBuilder(object):
         config = {'scratch': scratch,
                   'yum_repourls': list(repos),
                   'git_branch': branch,
+                  'arch_override': 'x86_64 s390x',
                   'signing_intent': 'unsigned'}
         if koji_parent_build:
             config['koji_parent_build'] = str(koji_parent_build)
