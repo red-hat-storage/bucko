@@ -182,7 +182,7 @@ def parse_args():
     parser.add_argument('--compose', required=False,
                         default=compose_url_from_env(),
                         help='HTTP(S) URL to a product Pungi compose.')
-    parser.add_argument('--scratch', action='store_true',
+    parser.add_argument('--scratch', default=True, action='store_true',
                         help='scratch-build container image')
     return parser.parse_args()
 
