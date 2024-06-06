@@ -10,7 +10,8 @@ from unittest.mock import patch
        return_value={'state_name': 'done',
                      'result_repofile': 'https://example.com/example.repo'})
 def test_generate(mock_wait, mock_request):
-    result = odcs_manager.generate('ceph-6.0-rhel-9-candidate')
+    result = odcs_manager.generate('ceph-6.0-rhel-9-candidate',
+                                   'x86_64 ppc64le s390x')
     assert result == 'https://example.com/example.repo'
 
     mock_request.assert_called_once()

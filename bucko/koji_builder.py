@@ -110,3 +110,15 @@ class KojiBuilder(object):
                 tag_name = tag['name']
                 print('Untagging %s from %s' % (url, tag_name))
                 self.session.untagBuild(tag_name, build_id, strict=False)
+
+    def get_target_arches(self, target):
+        """
+        Return the arches for a Koji build target.
+
+        :param str target: eg. ceph-8.0-rhel-9-containers-candidate
+        :returns: a space-separated list, like "x86_64 ppc64le s390x aarch64".
+        """
+        result = self.session.getBuildTarget(target, strict=True)
+        build_tag = result['build_tag']
+        tag = self.session.getTag(build_tag, strict=True)
+        return tag['arches']
